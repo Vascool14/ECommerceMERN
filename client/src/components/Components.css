@@ -1,0 +1,44 @@
+.toggleSection{
+    @apply flex w-full p-2 px-3 rounded-3xl items-center justify-between;
+}
+
+header nav{
+    height: var(--navHeight);
+    transition: all 0.3s ease-out;
+    padding: 0.8rem 1.2rem; 
+    display: flex; 
+    align-items: center; 
+    background-color: var(--bg); 
+    @apply max-sm:border-t max-sm:py-5 max-sm:h-auto sm:gap-8 max-sm:justify-around sm:px-[var(--sidePadding)] sm:border-b border-[#8884]
+}
+
+header a, header button{
+    @apply p-1 px-4 z-10 rounded-full transition-all duration-150 flex items-center justify-center;
+}
+header a{
+    padding:0;
+}
+.svgContainer{
+    @apply flex justify-center items-center relative;
+}
+.svgContainer .topPin{
+    @apply absolute -top-1 -right-2 bg-[var(--blue)] text-white rounded-full h-4 text-xs w-4 border border-[var(--text)] p-1 flex items-center justify-center;
+}
+
+.svgContainer::before{
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 100%;
+    height: 100%;
+    background: var(--text);
+    opacity: 0.1;
+    transition: all 0.2s;
+    z-index: -1;
+}
+.svgContainer:hover::before, .svgContainer:active::before{
+    transform: translate(-50%, -50%) scale(1.8);
+}
