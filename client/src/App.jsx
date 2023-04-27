@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect, useContext } from 'react'
 import { MyContext } from './Context'
 import Navbar from './components/Navbar'
@@ -13,17 +13,20 @@ import Products from './pages/Products'
 import Product from './pages/Product'
 import NotFound from './pages/NotFound'
 import axios from 'axios'
+import Toast from './components/Toast'
 
-axios.defaults.baseURL = 'http://localhost:4000'
+axios.defaults.baseURL = 'http://localhost:80'
 // axios.defaults.withCredentials = true;
 
 export default function App() {
   const html = document.querySelector('html');
   html.setAttribute('data-theme', localStorage.getItem('data-theme') || 'light');
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--sky')); 
-  
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--secondBg')); 
+
   const { state, setState } = useContext(MyContext);
-  const { products } = state;
+  const { products, documentTitle } = state;
+
+  document.title = documentTitle.title + documentTitle.after;
   
   useEffect(() => {
     setState({...state, products: {...products, loading: true}});
@@ -32,11 +35,14 @@ export default function App() {
       .catch(err=> { setState({...state, products: {list: [], error: err, loading: false}}) })
   }, [])
 
+  const location = useLocation();
+  const background = location.state && location.state.background;
   return (
     <div className='App'>
         <Navbar />
         <Menu />
-        <Routes>
+        <Toast />
+        <Routes location={background || location}>
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/account" element={<Account />} />
@@ -45,9 +51,15 @@ export default function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="*" element={<NotFound item={'Page'}/>} />
           <Route path="/products" element={<Products/>} />
-          <Route path="/products/:id" element={<Product/>} />
           <Route path="/products/*" element={<NotFound item={'Product'}/>} />
+          {/* {user._id ==  */}
         </Routes>
+        
+        {background && (
+        <Routes>
+          <Route path="/products/:id" element={<Product/>} />
+        </Routes>
+        )} 
     </div>
   )
 }

@@ -5,7 +5,16 @@ export const MyContext = createContext();
 export const MyProvider = (props) => {
   const [state, setState] = useState({
     menuOpen: false,
+    modalOpen: false,
+    toast: {
+      text: "",
+      succes: undefined,
+    },
     theme: localStorage.getItem('data-theme') || "light",
+    documentTitle: {
+      title: "Amazon Store ",
+      after: "",
+    },
     // searchOpen: false,
     news: {
       show: true,
@@ -13,12 +22,19 @@ export const MyProvider = (props) => {
     },
     products: {
       list: [],
-      loading: true,
+      loading: false,
       error: null
     },
     wishlist: [],
     cart: [],
-    user: {}
+    user: {
+      username: "",
+      email: "",
+      avatar: "",
+      cart : [],
+      wishlist: [],
+      orders: []
+    }
   });
   return (
     <MyContext.Provider value={{ state, setState }}>

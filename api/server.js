@@ -11,7 +11,7 @@ const app = express();
 //middleware 
 app.use(express.json()); //built-in function in Express, parses incoming requests with JSON payloads and is based on body-parser.
 
-app.use(cors({origin: 'http://localhost:5173'})); // allows requests from the specified origin
+app.use(cors({origin: ['http://localhost:5173', 'http://192.168.100.130:5173']})); // allows requests from the specified origin
 
 app.use((req, res, next) => { 
     console.log(req.path, req.method); 

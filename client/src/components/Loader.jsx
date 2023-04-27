@@ -28,7 +28,7 @@ const Loader = () => {
         }
         `}
       </style>
-      <div class="loader"></div>
+      <div className="loader"></div>
     </>
   )
 }

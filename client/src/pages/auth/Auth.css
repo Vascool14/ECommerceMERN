@@ -6,12 +6,12 @@
     width: 100%;
     padding: 0 12vw;
     text-align: center;
-    @apply  max-sm:pb-[20vh];
+    @apply  max-sm:pb-[26vh];
 }
 .auth form{
     display: flex;
     gap: 1rem;
-    margin: 2rem 1rem;
+    margin: 1rem 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;

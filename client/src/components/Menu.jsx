@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { MyContext } from '../Context';
+import { Link } from 'react-router-dom'
 import './Components.css'
 
 const Menu = () => {
@@ -14,33 +15,47 @@ const Menu = () => {
     .checkbox:checked + .switch .slider {   left:calc(50% - 4px);  top:calc(50% - 27px/2); }
     `
     const {state, setState} = useContext(MyContext)
-    let { menuOpen, theme} = state;
+    const { menuOpen, theme, toast} = state;
     const toggleTheme = () => {
         const newTheme = ( theme =='dark' ? 'light' : 'dark');
         document.documentElement.setAttribute('data-theme', newTheme );
         document.querySelector('meta[name="theme-color"]').setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--sky'));
         localStorage.setItem( 'data-theme', newTheme );
-        setState({...state, theme: newTheme });
+        setState({...state, theme: newTheme, toast: {"text": `Theme set to ${newTheme}`, "success": true }});
         if(theme == "light") navigator.vibrate(50);
     }
     return ( 
     <>    
-        <aside style={{transform: menuOpen? 'translate(0, -50%)':'translate(-110%, -50%)'}} 
-            className='fixed p-4 py-6 w-[calc(14rem+2vw)] top-1/2 left-0 flex flex-col gap-2 transition-all duration-300 justify-center 
-            rounded-r-xl bg-white/[0.2] backdrop-blur-[3px] border border-l-0 border-white/[0.4] z-[102]'>
+        <aside style={{transform: menuOpen? 'translateX(0)':'translateX(-110%)'}}
+            className='fixed p-4 py-6 w-[calc(14rem+8vw)] h-[100vh] bottom-0 left-0 sm:pt-[calc(var(--navHeight)+2rem)]
+            flex flex-col gap-2 transition-all duration-300 
+            bg-[var(--bg)] z-[99]'>
             <style>{styles}</style>
-            <h2 className='px-4 pb-1'>Menu</h2>
+            <h2 className='px-4'>Menu</h2>
             <div className='toggleSection'>
                 <h4 className='ml-1'>Theme</h4>
                 <div className="container">
-                <input type="checkbox" checked={theme=="dark"} onChange={() => toggleTheme()} className="checkbox" id="checkbox1"/>
+                    <input type="checkbox" checked={theme=="dark"} onChange={() => toggleTheme()} className="checkbox" id="checkbox1"/>
                     <label className="switch" htmlFor="checkbox1"><span className="slider"></span></label>
                 </div>
             </div>
+            <h2 className='px-4'>Categories</h2>
+            <div className='flex flex-col gap-2 m-4' onClick={() => setState({...state, menuOpen: false})}>
+                {/*All  */}
+                <Link to='/products'>All</Link>
+                {/*Categories  */}
+                <Link to='/products?category=skin'>Skin</Link>
+                <Link to='/products?category=hair'>Hair</Link>
+                <Link to='/products?category=body'>Body</Link>
+                <Link to='/products?category=makeup'>Makeup</Link>
+                <Link to='/products?category=fragrance'>Fragrance</Link>
+                <Link to='/products?category=tools'>Tools</Link>
+                <Link to='/products?category=wellness'>Wellness</Link>
+            </div>
         </aside>
         {menuOpen && 
-        <div onClick={() => setState({...state, menuOpen: !menuOpen})} 
-        className='w-screen h-screen bg-black/[0.2] fixed top-0 left-0 z-[101]'></div>}
+        <div onClick={() => setState({...state, menuOpen: false})} 
+        className='w-screen h-screen bg-black/[0.4] fixed top-0 left-0 z-[98]'></div>}
     </>
 
   )

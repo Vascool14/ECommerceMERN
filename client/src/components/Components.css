@@ -9,7 +9,7 @@ header nav{
     display: flex; 
     align-items: center; 
     background-color: var(--bg); 
-    @apply max-sm:border-t max-sm:py-5 max-sm:h-auto sm:gap-8 max-sm:justify-around sm:px-[var(--sidePadding)] sm:border-b border-[#8884]
+    @apply max-sm:border-t sm:border-b max-sm:py-5 max-sm:h-auto sm:gap-8 max-sm:justify-around sm:px-[calc(var(--sidePadding)+0.6rem)] border-[#8884]
 }
 
 header a, header button{

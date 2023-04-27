@@ -1,3 +1,8 @@
 .contentSection{
     @apply rounded-[2rem]
 }
+.placeholder > div, .placeholderBg > div{
+    @apply rounded-md animate-pulse
+}
+.placeholder > div{ background-color: var(--secondBg);}
+.placeholderBg > div{ background-color: var(--bg);}

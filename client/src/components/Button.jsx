@@ -1,14 +1,13 @@
-import React, {useRef} from 'react'
+import React from 'react'
 
-const Button = ({text, disabled, press}) => {
+const Button = ({text, disabled}) => {
     const styles = `
     button {
         padding: 0.6rem 1.4rem;
         border: none;
-        border-radius: .6rrem;
         position: relative;
         cursor: pointer;
-        overflow: hidden;
+        overflow: hidden !important;
       }
       button span:not(:nth-child(6)) {
         position: absolute;
@@ -36,19 +35,10 @@ const Button = ({text, disabled, press}) => {
         0%, 50%, 100% { transform: translateX(5px); }
         25%, 75% { transform: translateX(-5px); }
     }`
-    const buttonRef = useRef()
-    const handleClick = (e) => {
-      e.preventDefault();
-      if(disabled){
-        buttonRef.current.classList.add('disabled');
-        setTimeout(() => {buttonRef.current.classList.remove('disabled')}, 500)
-      }
-      else press();
-    }
   return (
     <>
     <style>{styles}</style>
-    <button ref={buttonRef} onClick={(e)=> handleClick(e)}className='bg-[var(--text)] text-[var(--bg)] rounded-xl'>
+    <button className='bg-[var(--text)] text-[var(--bg)] rounded-xl overflow-hidden'>
         <span className="circle1"></span>
         <span className="circle2"></span>
         <span className="circle3"></span>

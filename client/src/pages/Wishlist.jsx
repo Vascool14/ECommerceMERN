@@ -1,11 +1,16 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { MyContext } from '../Context'
+import { Navigate } from 'react-router-dom'
 
 const Wishlist = () => {
     const { state, setState } = useContext(MyContext);
-    const { wishlist, products } = state;
+    const { wishlist, products, user } = state;
+    if(!user.mail) {
+        useEffect(() => setState({...state, toast: {"text":"Login to view the wishlist", "succes":false} }), [])
+        return <Navigate to='/login' />
+    }
     return (
-    <main>
+    <main className='p-4'>
         <h2>Wishlist</h2>
         {wishlist.length > 0 ? 
         <div>
