@@ -42,3 +42,9 @@ header a{
 .svgContainer:hover::before, .svgContainer:active::before{
     transform: translate(-50%, -50%) scale(1.8);
 }
+
+/* Placeholders */
+
+.placeholder > div{
+    @apply rounded-2xl animate-pulse bg-[var(--secondBg)];
+}

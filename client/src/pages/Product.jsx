@@ -1,16 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom'
 import { MyContext } from '../Context'
 import axios from 'axios'
 import './Pages.css'
 // import ImageCarousel from '../components/ImageCarousel'
-import png from '../assets/face-wash-png.png'
 
 const Product = () => {
     let { id } = useParams()
     id = id.substring(id.indexOf('=')+1);
     const { state, setState } = useContext(MyContext);
-    const { products, documentTitle } = state;
+    const { products, documentTitle, user } = state;
     const [ animate , setAnimate ] = useState(100);
     if(!products){
       setState({...state, products: {...products, loading: true}});
@@ -40,6 +39,8 @@ const Product = () => {
       setAnimate(100);
       setTimeout(() => {navigate('/categories')}, 500);
     }
+    const recentlyViewedProducts = products.list.filter(product => user.recentlyViewed.includes(product._id));
+    const location = useLocation();
     return (
     <main className='sm:px-8 bg-[var(--bg)] fixed top-0 w-screen transition-all duration-500 overflow-scroll h-screen'
     style={{transform: `translateX(${animate}vw)`}}>
@@ -84,7 +85,35 @@ const Product = () => {
               </div>
           </section>
         }
-        <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur reprehenderit doloremque earum numquam facilis dolorem, voluptatum fuga voluptatibus suscipit soluta!</h1>
+        <h2>Details:</h2>
+        <p>Adipisicing elit. Aspernatur reprehenderit doloremque earum numquam facilis dolorem, voluptatum fuga voluptatibus suscipit soluta!</p>
+        <h2>Reviews:</h2>
+        <p>Lorem, ipsum dolor voluptatum fuga voluptatibus suscipit soluta!</p>
+        {/* Recently Viewed */}
+        {user.recentlyViewed.length > 0 && 
+        <>
+          <h2>Recently viewed</h2>
+          <section className='grid gap-2 max-sm:grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] p-0'>
+          {recentlyViewedProducts.map((product) => (
+              <Link to={`/products/${product._id}`}
+              key={product._id} state={{ background:location }}
+              className='rounded-3xl p-3 flex flex-col bg-[var(--secondBg)] gap-2 text-[var(--text)]
+              hover:shadow-md shadow-[var(--text)] cursor-pointer relative'>
+                  <div className='rounded-xl aspect-[3/4] mb-auto overflow-hidden relative'>
+                      <img className='transition-all duration-300 h-full object-cover' src={product.images[0]} width={'100%'} alt="" />
+                  </div>
+                  <h4>{product.title} - ${product.price}</h4>
+                  <div className="flex justify-between items-center">
+                      <p>{product.description}</p>
+                      <div className="svgContainer flex items-center justify-center absolute bottom-0 right-0 m-2">
+                          <svg fill={Math.round(Math.random()*3)%3==0?'red':'none'} viewBox="0 0 24 24" strokeWidth={1.5} stroke={'var(--bg)'} className="w-7 h-7"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+                      </div>
+                  </div>
+              </Link>
+          ))}
+        </section>
+        </>}
+        
       </div>
     </main>
   )

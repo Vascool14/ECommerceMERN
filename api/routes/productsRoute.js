@@ -32,5 +32,16 @@ router.delete('/:id', async (req, res) => {
     res.status(200).json({message: 'Product deleted: '+ product.title});
 });
 
+//ADD product id to one user's recently viewed products
+router.patch('/recently-viewed/:id', async (req, res) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({message: 'Product not found'}); // check if id is valid
+    }
+    if(!mongoose.Types.ObjectId.isValid(userId)){
+        return res.status(404).json({message: 'User not found'}); // check if id is valid
+    }
+});
 
 module.exports = router;

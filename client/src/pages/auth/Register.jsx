@@ -20,9 +20,12 @@ const Register = () => {
     async function registerUser(e){
       e.preventDefault();
       try{
-          await axios.post('/users/register', {username, mail, password});
-          setState({...state, toast: {"text":"User registered successfully!", success: true} });
-          setRedirect(true);
+          await axios.post('/users/register', {username, mail, password})
+          .then(res => {
+            localStorage.setItem('token', res.data.token);
+            setState({...state, toast: {"text":"User registered successfully!", success: true} });
+            setRedirect(true);
+          })
       }
       catch(e){
         setState({...state, toast: {"text":e.response.data.error, success:false} });

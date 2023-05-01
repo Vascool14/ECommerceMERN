@@ -14,6 +14,7 @@ import Product from './pages/Product'
 import NotFound from './pages/NotFound'
 import axios from 'axios'
 import Toast from './components/Toast'
+import AdminPanel from './pages/CMS/AdminPanel'
 // import Loader from './components/Loader'
 
 axios.defaults.baseURL = 'http://localhost:80'
@@ -28,13 +29,33 @@ export default function App() {
   const { products, documentTitle, loading } = state;
 
   document.title = documentTitle.title + documentTitle.after;
-  
+
   useEffect(() => {
     setState({...state, products: {...products, loading: true}});
     axios.get('/products')
-      .then(res => { setState({...state, products: {list: res.data.products, loading: false, err: null}}) })
+      .then(res => { 
+        if(localStorage.getItem('token')){
+          axios.get('/users/me', {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+          .then(response =>{
+            setState({
+              ...state,
+              user:response.data,
+              products: {list: res.data.products, loading: false},
+              toast: {text:`Hello, ${response.data.username}!`,success:true}});
+          }) 
+        }
+        else
+        setState({...state, products: {list:res.data.products, loading:false, err:null}}) 
+      })
       .catch(err=> { setState({...state, products: {list: [], error: err, loading: false}}) })
   }, [])
+  
+  // if(localStorage.getItem('token')){
+  //   axios.get('/users/me', {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+  //   .then(res =>{
+  //     setState({...state,user:res.data,toast: {text:`Hello, ${res.data.username}!`,success:true}});
+  //   }) 
+  // }
 
   const location = useLocation();
   const background = location.state && location.state.background;
@@ -53,7 +74,7 @@ export default function App() {
           <Route path="*" element={<NotFound item={'Page'}/>} />
           <Route path="/products" element={<Products/>} />
           <Route path="/products/*" element={<NotFound item={'Product'}/>} />
-          {/* {user._id ==  */}
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes> 
         {background && (
         <Routes>

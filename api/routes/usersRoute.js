@@ -53,6 +53,7 @@ router.post('/login', async (req, res) => {
 
     // Send the JWT as a cookie for 7 days in milliseconds
     res.cookie('token', token, { httpOnly: true, maxAge: 86400000 });
+
     // SUCCESS
     res.status(200).json({token});
     }catch(err){
@@ -64,7 +65,7 @@ router.post('/login', async (req, res) => {
 
 // Log out a user 
 router.post('/logout', (req, res) => {
-    res.clearCookie('token');
+    res.clearCookie('token'); 
     res.status(200).json({ message: 'Logged out successfully' });
 }); 
 
@@ -84,27 +85,6 @@ router.get('/me', async (req, res) => {
 
     res.status(200).json(user);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Server error' });
-    }
-});
-
-// Get the dashboard (only for admins)
-router.get('/dashboard', async (req, res) => {
-  try {
-    const token = req.cookies.token;
-    
-    // Verify the JWT and extract the user's role
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decodedToken.userId;
-
-    // Find the user in the database
-    const user = await userModel.findById(userId);
-    if (!user || (user.role !== 'admin')) return res.status(401).json({ error: 'Unauthorized' }); // Check if the user is an admin
-
-    res.status(200).json({ message: 'Hello, admin!' });
-    } catch (err) {
-        // ERROR Handling
         console.error(err);
         res.status(500).json({ error: 'Server error' });
     }

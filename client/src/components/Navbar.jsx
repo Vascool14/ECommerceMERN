@@ -67,11 +67,13 @@ const Navbar = () => {
           <div className='max-sm:order-5'>
             {user.username ? 
             <Link to={'/account'} className="svgContainer account rounded-full h-8 w-8 border-2" 
-            style={{borderColor: (location.pathname==='/account')&&user.avatar ?'var(--blue)':'var(--bg)'}}>
+            style={{borderColor: (location.pathname==='/account') ?'var(--text)':'var(--bg)'}}>
               {user.avatar ?
-                <img className='h-full w-full rounded-full' src={user.avatar} alt='profile' />
-                :              
-                <svg fill={(location.pathname.slice(0,8)==='/account')?'var(--text)':'none'} viewBox="0 0 24 24" strokeWidth={1.5} stroke={'var(--text)'} className="w-7 h-7"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                <img className='h-full w-full rounded-full' src={user.avatar} alt='' />
+                :
+                <div className="rounded-full bg-[var(--blue)] flex items-center h-full w-full justify-center">
+                  <h4 className='uppercase text-white'>{user.username.slice(0,1)}</h4>
+                </div>
               }
             </Link>
 
