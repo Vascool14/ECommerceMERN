@@ -1,6 +1,6 @@
 const Loader = () => {
     return (
-    <>
+    <main className="fixed z-50 top-0 h-screen w-screen left-0 flex items-center justify-center">
       <style>
         {`
         .loader {
@@ -29,7 +29,7 @@ const Loader = () => {
         `}
       </style>
       <div className="loader"></div>
-    </>
+    </main>
   )
 }
 

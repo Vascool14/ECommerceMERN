@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    mail: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true
@@ -12,10 +16,6 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         required: false
-    },
-    mail: {
-        type: String,
-        required: true
     },
     cart: {
         type: Array,
@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema({
         type: Array,
         required: false
     },
-});
+    recentlyViewed: {
+        type: Array,
+        required: false
+    },
+    role: {
+        type: String,
+        required: true
+    },
+},{ versionKey: false });  // Disable the version key
 
 module.exports = mongoose.model('userModel', userSchema);

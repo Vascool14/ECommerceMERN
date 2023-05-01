@@ -10,16 +10,14 @@ const Product = () => {
     let { id } = useParams()
     id = id.substring(id.indexOf('=')+1);
     const { state, setState } = useContext(MyContext);
-    const { products, documentTitle, modalOpen } = state;
+    const { products, documentTitle } = state;
     const [ animate , setAnimate ] = useState(100);
-
     if(!products){
       setState({...state, products: {...products, loading: true}});
       axios.get('/products')
-        .then(res => { setState({...state, products: {list: res.data.products, loading: false, err: null}}) })
-        .catch(err=> { setState({...state, products: {list: [], error: err, loading: false}}) })
+        .then(res => { setState({...state, products: {list: res.data.products, loading: false}}) })
+        .catch(err=> { setState({...state, products: {list: [], loading: false, toast: {text: err, success: false}}}) })
     }
-
     const product = products.list.find(product => product._id === id)
     useEffect(() => {
       setAnimate(0);
@@ -33,11 +31,10 @@ const Product = () => {
         body.style.overflow = 'auto';
       }
     }, [])
-    
     const navigate = useNavigate();
     function CloseModal(){
       setAnimate(100);
-      setTimeout(() => {navigate('/products')}, 500);
+      setTimeout(() => {navigate(-1)}, 500);
     }
     function OpenCategories(){
       setAnimate(100);
@@ -59,13 +56,14 @@ const Product = () => {
 
         {/* Product */}
         {product ?
-          <section className="flex max-sm:flex-col gap-4 max-sm:p-8">
+          <section className="flex max-sm:flex-col gap-4 max-sm:p-8 bg-red-500">
             <div key={product.id} className='rounded-3xl flex items-center justify-center aspect-square w-full sm:w-auto max-h-[50vh]'>
               <img className='rounded-xl h-full object-cover' src={product.images[0]} alt="" />
             </div>
             <div>
               <h3>{product.title} - ${product.price}</h3>
               <p>{product.description}</p>
+              <button onClick={() => addToCart()}></button>
             </div>
           </section>
           :

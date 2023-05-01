@@ -14,6 +14,7 @@ import Product from './pages/Product'
 import NotFound from './pages/NotFound'
 import axios from 'axios'
 import Toast from './components/Toast'
+// import Loader from './components/Loader'
 
 axios.defaults.baseURL = 'http://localhost:80'
 // axios.defaults.withCredentials = true;
@@ -24,7 +25,7 @@ export default function App() {
   document.querySelector('meta[name="theme-color"]').setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--secondBg')); 
 
   const { state, setState } = useContext(MyContext);
-  const { products, documentTitle } = state;
+  const { products, documentTitle, loading } = state;
 
   document.title = documentTitle.title + documentTitle.after;
   
@@ -53,8 +54,7 @@ export default function App() {
           <Route path="/products" element={<Products/>} />
           <Route path="/products/*" element={<NotFound item={'Product'}/>} />
           {/* {user._id ==  */}
-        </Routes>
-        
+        </Routes> 
         {background && (
         <Routes>
           <Route path="/products/:id" element={<Product/>} />

@@ -21,7 +21,7 @@ const Menu = () => {
         document.documentElement.setAttribute('data-theme', newTheme );
         document.querySelector('meta[name="theme-color"]').setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--sky'));
         localStorage.setItem( 'data-theme', newTheme );
-        setState({...state, theme: newTheme, toast: {"text": `Theme set to ${newTheme}`, "success": true }});
+        setState({...state, theme: newTheme, toast: {"text": `Theme set to ${newTheme}`, success: true }});
         if(theme == "light") navigator.vibrate(50);
     }
     return ( 

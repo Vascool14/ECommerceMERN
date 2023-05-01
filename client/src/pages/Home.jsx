@@ -16,8 +16,9 @@ const Home = () => {
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
   const handleSubmit = (e) => {
+    e.preventDefault();
     const user = { username, mail, password, avatar, wishlist, cart};
-    axios.post('http://localhost:4000/users', user)
+    axios.post('users/register', user)
       .then((res) => {
         console.log(res.data);
         setState({ ...state, user: res.data });
@@ -63,7 +64,9 @@ const Home = () => {
               <label className="user-label">Cart</label>
             </div>
 
-            <Button text="Create User" disabled={mail.length<10 || password.length<8} press={(e)=>handleSubmit(e)}/>
+            <span className="w-full" onClick={(e) => handleSubmit(e)}>
+              <Button text="Create User" disabled={mail.length<10 || password.length<8}/>
+            </span>
       </form>
     </main>
   )

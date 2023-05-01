@@ -7,7 +7,7 @@ const Toast = () => {
     const [show, setShow] = useState(toast.text ? true : false);
     const [backup, setBackup] = useState(toast.text);
 
-    const clearToast = () => setState((prevState) => ({ ...prevState, toast: {"text": null, "success":toast.success} }) );
+    const clearToast = () => setState((prevState) => ({ ...prevState, toast: {"text": null, success:toast.success} }) );
 
     useEffect(() => {
         if(toast.text) {

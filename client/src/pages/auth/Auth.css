@@ -24,6 +24,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 
 .input-group {   
     position: relative;
+    width: 100%;
 }
 .auth input, .auth button {
     border: solid 1.5px var(--text);

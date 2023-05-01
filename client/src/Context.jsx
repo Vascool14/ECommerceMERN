@@ -8,7 +8,7 @@ export const MyProvider = (props) => {
     modalOpen: false,
     toast: {
       text: "",
-      succes: undefined,
+      success: undefined,
     },
     theme: localStorage.getItem('data-theme') || "light",
     documentTitle: {
@@ -22,17 +22,15 @@ export const MyProvider = (props) => {
     },
     products: {
       list: [],
-      loading: false,
-      error: null
+      loading: false
     },
-    wishlist: [],
-    cart: [],
     user: {
       username: "",
-      email: "",
+      mail: "",
       avatar: "",
       cart : [],
       wishlist: [],
+      recentlyViewed: [],
       orders: []
     }
   });

@@ -1,25 +1,33 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+import { MyContext } from '../../Context'
 import './Auth.css'
 import Button from '../../components/Button'
 
 const Register = () => {
     const [username , setUsername] = useState("");
-    const [email, setEmail] = useState("");
+    const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
+    const [redirect, setRedirect] = useState(false);
+
     const [isPasswordVisible , setIsPasswordVisible ] = useState(false);
+    const { state, setState } = useContext(MyContext);
+    
     const navigate = useNavigate();
+    if(state.user.mail || redirect) navigate('/account');
 
     async function registerUser(e){
       e.preventDefault();
       try{
-          await axios.post('/register', {username, email, password});
-          alert('User created successfully!');
+          await axios.post('/users/register', {username, mail, password});
+          setState({...state, toast: {"text":"User registered successfully!", success: true} });
+          setRedirect(true);
       }
       catch(e){
-          alert(' Error registering. Email already in use.');
+        setState({...state, toast: {"text":e.response.data.error, success:false} });
       }
-  }
+    }
     return (
     <main className="auth">
         <h2>Sign up for the best offers!</h2>
@@ -29,7 +37,7 @@ const Register = () => {
               <label className="user-label">Username</label>
             </div>
             <div className="input-group">
-              <input required type="email" name="email"  value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input required type="email" name="email"  value={mail} onChange={(e) => setMail(e.target.value)} />
               <label className="user-label">Email</label>
             </div>
             <div className="input-group">
@@ -37,11 +45,12 @@ const Register = () => {
               <label className="user-label">Password</label>
             </div>
             
-            <Button text="Register"  disabled={email.length<10 || password.length<8 || username.length<3} />
-
+            <span onClick={(e) => registerUser(e)} className="w-full">
+              <Button disabled={mail.length<10 || password.length<5 || username.length<4} text='Sign up'/>
+            </span>
+            
             <p>Already have an account? <Link to={'/login'}>Log in</Link></p>
         </form>
-
     </main>
   )
 }
