@@ -25,11 +25,21 @@ const Home = () => {
       })
       .catch((err) => console.log(err));
   }
+  
+  // const link = "https://drive.google.com/file/d/1Ea_QellRdiwTRKeIuSnW76pQC6c7sncj/view?usp=share_link"
+  // console.log(`https://drive.google.com/uc?id=${link.match(/\/d\/(.+?)\//)[1]}`); 
+  // https://drive.google.com/uc?id=1fgMY4sRrk7NYSZjXbS54dkOSFA4ILswx
+  // https://drive.google.com/uc?id=1txNvKZtPSqEOKSDJq4cSBvQkJC9qHk68
+  // https://drive.google.com/uc?id=13ZsK6tvztabamndE0AOyGaE8zZImL_lF
+  // https://drive.google.com/uc?id=1nZ89DO7aaBQLIK__V-Ky1GNIQndBVqOa
+  // https://drive.google.com/uc?id=1Ea_QellRdiwTRKeIuSnW76pQC6c7sncj
+
   return (
     <main>
       <h1>Home</h1>
       <Link to="/products" className='p-4 rounded-xl bg-[var(--text)] text-[var(--bg)]'>Products</Link>
       <div className='p-10 overflow-hidden bg-[var(--bg)] border-t-2'>
+      <Link to="/admin">Admin Dashboard</Link>
         <h4>ntium, sit sunt placeat ea natus. t amet consectetur adipisicing elit. Voluptatem repellat perspiciatis quo voluptas fugit numquam neque, officia natus quidem eligendi porro, assumenda corrupti quas? Doloremque sint earum commodi suscipit sunt!</h4>
         <h3>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia aspernatur praesentium ut tenetur esse placeat repudiandae nisi autem alias eaque.</h3>
       </div>

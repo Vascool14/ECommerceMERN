@@ -25,6 +25,14 @@ router.post('/register', async (req, res) => {
     });
     // Save the new user to the database
     await newUser.save();
+
+    // Generate a JWT with the user's ID and role
+    const payload = { userId: user._id, role: user.role }; 
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' }); // Sign the JWT for 1 days
+
+    // Send the JWT as a cookie for 7 days in milliseconds
+    res.cookie('token', token, { httpOnly: true, maxAge: 86400000, sameSite: 'none', secure: true });
+
     // SUCCESS
     res.status(201).json({ message: 'User created successfully' });
   }catch(err){
@@ -33,7 +41,7 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-
+ 
 // Log in a user
 router.post('/login', async (req, res) => {
   try {
@@ -52,7 +60,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' }); // Sign the JWT for 1 days
 
     // Send the JWT as a cookie for 7 days in milliseconds
-    res.cookie('token', token, { httpOnly: true, maxAge: 86400000 });
+    res.cookie('token', token, { httpOnly: true, maxAge: 86400000, sameSite: 'none', secure: true });
 
     // SUCCESS
     res.status(200).json({token});
@@ -65,8 +73,8 @@ router.post('/login', async (req, res) => {
 
 // Log out a user 
 router.post('/logout', (req, res) => {
-    res.clearCookie('token'); 
-    res.status(200).json({ message: 'Logged out successfully' });
+    res.cookie('token', '', { maxAge: 0 }); // Clear the cookie
+    res.status(200).json();
 }); 
 
 // Get the currently logged in user, you might need this when you want to display the user's name in the navbar for example

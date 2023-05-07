@@ -24,14 +24,14 @@ const Navbar = () => {
     }, 7000);
     return () => clearInterval(interval);
   },[news.list.length])
-  
+
   const location = useLocation();
   return (
     <header className='fixed max-sm:bottom-0 left-0 flex-row sm:top-0 sm:flex-col w-screen z-[100] transition-all duration-200'>
       
-        <section className={`${!news.show && 'hidden'} bg-[var(--blue)] z-10 text-[var(--bg)] w-screen flex items-center justify-center relative`}>
+        <section className={`${!news.show && 'hidden'} bg-[var(--blue)] h-6 z-10 text-[var(--bg)] w-screen flex items-center justify-center relative`}>
           <p>{news.list[newsId]}</p>
-          <div onClick={()=> setState({...state,news:{...news,show:!news.show}})}
+          <div onClick={()=> {setState({...state,news:{...news,show:!news.show}}); document.documentElement.style.setProperty('--newsHeight', '0px');}}
           className='absolute right-[0.1rem] cursor-pointer'>
             <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke={'var(--bg)'} className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
           </div>

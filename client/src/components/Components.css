@@ -48,3 +48,15 @@ header a{
 .placeholder > div{
     @apply rounded-2xl animate-pulse bg-[var(--secondBg)];
 }
+
+.productImg::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 1.5rem);
+    background: var(--secondBg);
+    z-index: -1;
+    border-radius: 0.5rem;
+}

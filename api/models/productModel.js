@@ -17,6 +17,18 @@ const productSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    category: {
+        type: Array,
+        required: false
+    },
+    reviews: {
+        type: Array,
+        required: false
+    },
+    rating: {
+        type: Number,
+        required: false
+    }
 });
 
 module.exports = mongoose.model('productModel', productSchema);

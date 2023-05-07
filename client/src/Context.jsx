@@ -31,8 +31,10 @@ export const MyProvider = (props) => {
       cart : [],
       wishlist: [],
       recentlyViewed: [],
-      orders: []
-    }
+      orders: [],
+      role: "",
+    },
+    adminUsers: []
   });
   return (
     <MyContext.Provider value={{ state, setState }}>
