@@ -1,5 +1,6 @@
 const express = require('express');
 const productModel = require('../models/productModel');
+const newsModel = require('../models/newsModel');
 
 const router = express.Router(); 
 
@@ -7,6 +8,12 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     const products = await productModel.find({});
     res.status(200).json({products});
+});
+
+//GET news array 
+router.get('/news', async (req, res) => {
+    const news = await newsModel.find({}); 
+    res.status(200).json({news});
 });
 
 //Add user review to product

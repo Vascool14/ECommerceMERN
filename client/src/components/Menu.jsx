@@ -27,7 +27,7 @@ const Menu = () => {
     return ( 
     <>    
         <aside style={{transform: menuOpen? 'translateX(0)':'translateX(-110%)'}}
-            className='fixed p-4 py-6 w-[calc(14rem+8vw)] h-[100vh] bottom-0 left-0 sm:pt-[calc(var(--navHeight)+2rem)]
+            className='fixed p-4 py-6 w-[calc(15rem+8vw)] h-[100vh] bottom-0 left-0 sm:pt-[calc(var(--navHeight)+2rem)]
             flex flex-col gap-2 transition-all duration-300 
             bg-[var(--bg)] z-[99]'>
             <style>{styles}</style>

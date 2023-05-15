@@ -18,7 +18,7 @@ const Register = () => {
     if(state.user.mail || redirect) navigate('/account');
 
     async function registerUser(e){
-      e.preventDefault();
+      e.preventDefault(); 
       try{
           await axios.post('/users/register', {username, mail, password})
           .then(res => {
@@ -27,8 +27,8 @@ const Register = () => {
             setRedirect(true);
           })
       }
-      catch(e){
-        setState({...state, toast: {"text":e.response.data.error, success:false} });
+      catch(err){
+        setState({...state, toast: {"text":err.response.data.error, success:false} });
       }
     }
     return (
@@ -41,6 +41,7 @@ const Register = () => {
                 type="name"  
                 name="text" 
                 value={username} 
+                autoComplete='username'
                 onChange={(e) => setUsername(e.target.value)} 
               />
               <label className="user-label">Username</label>
@@ -52,6 +53,7 @@ const Register = () => {
                 type="email" 
                 name="email"  
                 value={mail} 
+                autoComplete='email'
                 onChange={(e) => setMail(e.target.value)} 
               />
               <label className="user-label">Email</label>
@@ -60,6 +62,7 @@ const Register = () => {
             <div className="input-group relative">
               <input 
                 required 
+                autoComplete='new-password'
                 type={isPasswordVisible?'text':'password'}
                 name="password" 
                 value={password}

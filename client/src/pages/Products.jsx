@@ -9,7 +9,7 @@ const Products = () => {
     const { products } = state;
     const location = useLocation();
     return (
-    <main className='sm:px-8 p-4 bg-[var(--secondBg)]'>
+    <main className='sm:px-8 p-4'>
         <section className='grid max-sm:grid-cols-2 grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-3'>
             {/* LOADING... */}
             {products.loading && Array(12).fill(0).map((_,i) => 
@@ -24,7 +24,7 @@ const Products = () => {
             ))}
         </section> 
         {/* ERROR */}
-        {products.error&&<h1 className='text-center mt-[35vh]'>Error: <span className='text-[var(--blue)]'>{products.error.message}</span><br/>Please try again later!</h1>}
+        {products.error&&<h1 className='text-center mt-[25vh]'>Error: <span className='text-[var(--blue)]'>{products.error.message}</span><br/>Please try again later!</h1>}
     </main>
   )
 }

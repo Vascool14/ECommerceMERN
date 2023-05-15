@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react'
-import { useParams, useNavigate, useLocation, Link } from 'react-router-dom'
+import React, {useContext, useEffect, useState, useRef} from 'react'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { MyContext } from '../Context'
 import axios from 'axios'
 import './Pages.css'
@@ -32,19 +32,21 @@ const Product = () => {
       }
     }, [])
     const navigate = useNavigate();
-    function CloseModal(){
-      setAnimate(100);
-      setTimeout(() => {navigate(-1)}, 500);
-    }
-    const recentlyViewedProducts = products.list.filter(product => user.recentlyViewed.includes(product._id));
+    // const recentlyViewedProducts = products.list.filter(product => user.recentlyViewed.includes(product._id));
     const location = useLocation();
+    const upAnchor = useRef(null);
+    const goTo = (product) => {
+      navigate(`/products/${product.title.replace(/\s+/g,'-').toLowerCase()+'='+product._id}`, {state: {background: location.pathname}});
+      upAnchor.current.scrollIntoView({behavior: 'smooth'}); 
+    }
     return (
-    <main className='p-4 bg-[var(--bg)] fixed top-0 w-screen transition-all duration-500 overflow-scroll h-screen'
+    <main className='bg-[var(--bg)] fixed top-0 w-screen transition-all duration-500 overflow-scroll h-screen z-10'
     style={{transform: `translateX(${animate}vw)`}}>
+      <div className="absolute w-1 h-1 top-[-1rem]" ref={upAnchor}></div>
       <div className='relative'>
         {/* Controls */}
         {product && 
-        <button onClick={() => CloseModal()} className='svgContainer z-10 h-7 w-7 absolute top-0 left-[0.1rem] m-2'>
+        <button onClick={() => navigate(-1)} className='svgContainer z-10 h-7 w-7 absolute top-0 left-[0.1rem] m-2'>
           <svg className="h-8 w-8 text-[var(--text)] hover:text-[var(--primary)] transition-all duration-300 mr-1" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke={'var(--text)'}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
         </button>}
 
@@ -85,13 +87,12 @@ const Product = () => {
       {/* SIMILAR */}
         <>
           <h2>View similar</h2>
-          <section className='grid grid-cols-3 gap-2 w-full'>
-          {products.list.slice(0,3).map((product) => (
-              <Link to={`/products/${product._id}`} 
-              key={product._id} state={{ background:location }}
-              className='border-[#8884] border rounded-lg cursor-pointer'>
+          <section className='grid grid-cols-4 gap-2 w-full'>
+          {products.list.slice(0,4).map((product) => (
+              <div onClick={() => goTo(product)}
+              key={product._id} state={{ background:location }}>
                 <ProductPreview product={product} />
-              </Link>
+              </div>
           ))}
         </section>
         </>
@@ -104,7 +105,7 @@ const Product = () => {
           {recentlyViewedProducts.map((product) => (
               <Link to={`/products/${product._id}`}
               key={product._id} state={{ background:location }}
-              className='shadow-[var(--secondBg)] hover:shadow-md rounded-lg cursor-pointer'>
+              className='shadow-[var(--secondBg)] hover:shadow-md rounded-xl cursor-pointer'>
                 <ProductPreview product={product} />
               </Link>
           ))}

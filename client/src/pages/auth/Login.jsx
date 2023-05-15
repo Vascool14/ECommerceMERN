@@ -4,6 +4,7 @@ import './Auth.css'
 import axios from 'axios';
 import Button from '../../components/Button'
 import { MyContext } from '../../Context'
+import GoogleLogin from 'react-google-login';
 
 const Login = () => {
     const [ mail, setMail ] = useState('');
@@ -14,7 +15,6 @@ const Login = () => {
 
     async function handleLoginSubmit(e) {
       e.preventDefault();
-      try {
         const response = await axios.post('/users/login', { mail, password });
         await axios.get('/users/me', {headers: {Authorization: `Bearer ${response.data.token}`}})
         .then(res =>{
@@ -22,16 +22,13 @@ const Login = () => {
           localStorage.setItem('token', response.data.token); 
           setRedirect(true);
         }) 
-      }catch(err){ 
-        setState({...state, toast: { text:err.message, success: false }});
-      }
     }
     const navigate = useNavigate();
     useEffect(() => {
      if(state.user.mail || redirect) navigate('/account');
     }, [state.user, redirect])
     return (
-    <main className='auth space '>
+    <main className='auth space'>
         <h2>Log in to your account</h2>
         <form>
             <div className="input-group">
@@ -63,14 +60,20 @@ const Login = () => {
               </span>
             </div>
 
+            <GoogleLogin 
+              clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={res => console.log(res)}
+              onFailure={res => console.log(res)}
+              cookiePolicy={'single_host_origin'}
+            />
+
             <span onClick={(e)=>handleLoginSubmit(e)} className='w-full'>
               <Button disabled={mail.length<4 || password.length<5} text='Log in'/>
             </span>
             
             <p>Don't have an account yet? <Link to={'/register'}>Sign up</Link></p>
         </form>
-
-
     </main>
   )
 }

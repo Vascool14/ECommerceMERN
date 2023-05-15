@@ -6,7 +6,7 @@
     width: 100%;
     padding: 0 ;
     text-align: center;
-    @apply  max-sm:pb-[26vh];
+    @apply  max-sm:pb-[26vh] sm:pb-[4vh];
 }
 .auth form{
     display: flex;
@@ -26,7 +26,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     position: relative;
     width: 100%;
 }
-.auth input, .auth button {
+.auth input, .auth button{
     border: solid 1.5px var(--text);
     border-radius: 1rem;
     background: none;

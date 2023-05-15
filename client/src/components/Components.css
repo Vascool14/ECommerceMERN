@@ -9,7 +9,7 @@ header nav{
     display: flex; 
     align-items: center; 
     background-color: var(--bg); 
-    @apply max-sm:border-t sm:border-b max-sm:py-5 max-sm:h-auto sm:gap-8 max-sm:justify-around sm:px-[calc(var(--sidePadding)+0.6rem)] border-[#8884]
+    @apply max-sm:border-t sm:border-b max-sm:py-5 max-sm:h-auto sm:gap-8 max-sm:justify-around sm:px-[calc(var(--sidePadding)+0.6rem)] border-[var(--gray)]
 }
 
 header a, header button{
@@ -49,14 +49,6 @@ header a{
     @apply rounded-2xl animate-pulse bg-[var(--secondBg)];
 }
 
-.productImg::before{
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: calc(100% - 1.5rem);
-    background: var(--secondBg);
-    z-index: -1;
-    border-radius: 0.5rem;
+#productImg{
+    background: linear-gradient(180deg, var(--secondBg) 0, var(--bg) 75%, #0002 75%, var(--secondBg) 100%);
 }

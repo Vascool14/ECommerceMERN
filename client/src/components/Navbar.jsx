@@ -4,7 +4,7 @@ import { MyContext } from '../Context';
 
 const Navbar = () => {
   const { state, setState } = useContext(MyContext);
-  const { menuOpen, modalOpen, news, user } = state;
+  const { menuOpen, modalOpen, user, news } = state;
   
   // make navbar appear when scrolling up
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -17,27 +17,27 @@ const Navbar = () => {
   window.addEventListener('scroll', handleScroll);
 
   // make adverts change at the top
-  const [ newsId, setNewsId ] = useState(0);
-  useEffect(()=>{
+  const [ newsId, setNewsId ] = useState(0); 
+  useEffect(()=>{ 
     const interval = setInterval(()=>{
-      setNewsId(newsId => newsId < news.list.length-1 ? newsId+1 : 0);
+      setNewsId(newsId => newsId < news.length-1 ? newsId+1 : 0);
     }, 7000);
     return () => clearInterval(interval);
-  },[news.list.length])
-
+  },[news.length])
+  
   const location = useLocation();
   return (
-    <header className='fixed max-sm:bottom-0 left-0 flex-row sm:top-0 sm:flex-col w-screen z-[100] transition-all duration-200'>
+    <header className={`${!visible && !modalOpen && 'sm:-translate-y-[200%]'} fixed max-sm:bottom-0 left-0 flex-row sm:top-0 sm:flex-col w-screen z-[100] transition-all duration-200`} >
       
-        <section className={`${!news.show && 'hidden'} bg-[var(--blue)] h-6 z-10 text-[var(--bg)] w-screen flex items-center justify-center relative`}>
-          <p>{news.list[newsId]}</p>
-          <div onClick={()=> {setState({...state,news:{...news,show:!news.show}}); document.documentElement.style.setProperty('--newsHeight', '0px');}}
+        <section className='bg-[var(--blue)] h-[var(--newsHeight)] overflow-hidden z-10 text-[var(--bg)] w-screen flex items-center justify-center relative'>
+          <p className='max-sm:text-sm'>{news[newsId]}</p>
+          <div onClick={()=> {document.documentElement.style.setProperty('--newsHeight', '0px')}}
           className='absolute right-[0.1rem] cursor-pointer'>
             <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke={'var(--bg)'} className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
           </div>
         </section>
 
-        <nav className={`${!visible && !modalOpen && 'sm:-translate-y-[200%]'}`}>
+        <nav>
           {/* HAMBURGER */}
           <div onClick={()=>  setState({...state, menuOpen: !menuOpen})} className='max-sm:order-1 svgContainer cursor-pointer z-10'>
             <svg fill={'none'} viewBox="0 0 24 24" strokeWidth={1.5} stroke={'var(--text)'} className="w-7 h-7"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
@@ -69,7 +69,7 @@ const Navbar = () => {
             <Link to={'/account'} className="svgContainer account rounded-full h-8 w-8 border-2" 
             style={{borderColor: (location.pathname==='/account') ?'var(--text)':'var(--bg)'}}>
               {user.avatar ?
-                <img className='h-full w-full rounded-full' src={user.avatar} alt='' />
+                <img className='h-full w-full rounded-full bg-[var(--blue)]' src={user.avatar} alt='' />
                 :
                 <div className="rounded-full bg-[var(--blue)] flex items-center h-full w-full justify-center">
                   <h4 className='uppercase text-white'>{user.username.slice(0,1)}</h4>

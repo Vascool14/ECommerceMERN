@@ -1,41 +1,123 @@
-import React, { useContext,useEffect} from 'react'
+import React, { useContext,useEffect, useState} from 'react'
 import { MyContext } from '../../Context'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import ProductPreview from '../../components/productPreview'
 
 const AdminUsers = () => {
     const { state, setState } = useContext(MyContext);
-    const { users } = state;
+    const { users, user, products } = state;
     const navigate = useNavigate();
     useEffect(() => {
-        if(state.user.role !== 'admin') navigate('/');
-        if(!users&& state.user.role === 'admin') navigate('/admin');
+        if(!localStorage.getItem('token')||user.role !== 'admin') return navigate('/account');
+        axios.get('/admin/users', {headers: {Authorization:`Bearer ${localStorage.getItem('token')}`}})
+        .then(res => {
+            setState({
+            ...state, 
+            users: [...res.data.users],
+            toast:{text:res.data.message, success:true} }) 
+        })
+        .catch(err => {
+            setState({...state, toast:{text:err.response.data.message, success:false}});
+            navigate('/account')
+        })
     }, [])
+    const COLORS = ['red', 'blue', 'green', 'dark-yellow', 'pink', 'purple', 'indigo', 'gray', 'orange', 'teal'];
+
+    const [isEditor, setIsEditor] = useState(false);
+    const [ localUser , setLocalUser ] = useState({});
+    const [ wishlistItems, setWishlistItems ] = useState([]);
+    const openUser = (user) => {
+        setIsEditor(true);
+        setLocalUser(user);
+        setWishlistItems(products.list.filter(product => user.wishlist.includes(product._id)))
+    }
     return (
-    <main className='p-4'>
-        <div className='mx-auto flex items-end justify-center gap-2'>
-            <h1 className='ml-8'>All Users</h1>
-            <p className='mb-4'>(Newest First)</p>
-        </div>
-        <section className='w-full grid md:grid-cols-2 xl:grid-cols-3 gap-2'>
-            {users && [...users.list].reverse().map((user) => (
-                <div key={user._id} className='flex items-center h-24 bg-[var(--secondBg)] p-2 rounded-xl'>
-                    <div className="h-full aspect-square">
-                        {user.avatar?
-                        <img className='h-full w-full rounded-lg object-cover' src={user.avatar} alt="avatar" />
-                        :
-                        <div className="h-full w-full rounded-lg flex items-center justify-center bg-[var(--blue)]">
-                            <h1 className='capitalize text-white'>{user.username.slice(0,1)}</h1>
-                        </div>}
-                    </div>
-                    
-                    <div className='flex flex-col p-2 overflow-scroll'>
-                        <h2>{user.username}</h2>
-                        <p>{user.mail}</p>
-                    </div>
+    <>
+        {/* EDITOR */}
+        {localUser.username && <div className="fixed w-screen z-10 h-screen flex items-center justify-center transition-all" style={{transform: isEditor ? 'translateX(0)' : 'translateX(-100vw)'}} >
+            <div className="w-screen h-screen absolute"onClick={()=> {if(isEditor) setIsEditor(false)}}></div>
+            <section className='overflow-y-scroll border border-[#8886] rounded-xl bg-[var(--bg)] w-[96%] sm:w-4/5 max-w-[56rem] max-h-[78vh] z-10 p-2 max-sm:mb-20 sm:mt-16 flex flex-col gap-2'>
+                <div key={localUser._id} className='flex items-center h-20 rounded-xl'>
+                        <div className="h-full aspect-square">
+                            {localUser.avatar?
+                            <img className='h-full w-full rounded-lg' src={localUser.avatar} alt="avatar" />
+                            :
+                            <div className="h-full w-full rounded-lg flex items-center justify-center" 
+                            style={{backgroundColor: COLORS[localUser.username.charCodeAt(0)%10]}}>
+                                <h1 className='capitalize text-white'>{localUser.username.slice(0,1)}</h1>
+                            </div>}
+                        </div>
+                        
+                        <div className='flex flex-col p-2 overflow-scroll'>
+                            <h2>{localUser.username}</h2>
+                            <p  className='underline cursor-pointer'  onClick={(e) => { e.preventDefault(); window.open(`mailto:${localUser.mail}?subject=Order%20Update&body=Good%20morning/afternoon/evening,%20your%20order%20has%20been%20....`, '_blank'); }}
+                            >{localUser.mail}</p>
+                        </div>
                 </div>
-            ))}
-        </section>
-    </main>
+            {/* orders */}
+                <hr className='border-[var(--gray)] w-full'/>
+                {wishlistItems.length > 0 ? <>
+                <h3 className='ml-1 capitalize'>{localUser.username}'s orders:</h3>
+                <div className='flex gap-2 w-auto overflow-x-scroll pb-2 min-h-[18rem]'>
+                    {wishlistItems.map((product) => (
+                        <span key={product._id} className='relative min-w-[12rem] max-w-[min(12rem,40vw)]'>
+                            <ProductPreview  product={product} />
+                            <div className="z-10 opacity-0 hover:opacity-80 text-[var(--bg)] transition-all absolute inset-0 rounded-xl bg-[var(--text)] flex flex-col justify-center text-center gap-3 p-2">
+                                <p className='font-semibold'>Status: <span className='text-[var(--blue)]'>shipping</span></p>
+                                <p className='font-semibold'>Date: 12/12/2021</p>
+                                <p className='font-semibold'>Id: 12094347236724</p>
+                                <p className='font-semibold'>Total: &pound;{product.price}</p>                                
+                            </div>
+                        </span>
+                    ))}
+                </div>
+                </> : <h3 className='ml-1'>User has no orders</h3>}
+            {/* wishlist */}
+                <hr className='border-[var(--gray)] w-full'/>
+                {wishlistItems.length > 0 ? <>
+                <h3 className='ml-1 capitalize'>{localUser.username}'s wishlist:</h3>
+                <div className='flex gap-2 w-auto overflow-x-scroll pb-2 min-h-[18rem]'>
+                    {wishlistItems.map((product) => (
+                        <span key={product._id} className='min-w-[12rem] max-w-[min(12rem,40vw)]'>
+                            <ProductPreview  product={product} />
+                        </span>
+                    ))}
+                </div>
+                </> : <h3 className='ml-1'>User has no wishlist</h3>}
+
+            </section>
+        </div>}
+
+        {/* main */}
+        <main style={{filter: isEditor ? 'blur(4px)':'none'}}>
+            <div className='mx-auto flex items-end justify-center gap-2'>
+                <h1 className='ml-8'>All Users</h1>
+                <p className='mb-3'>(Newest First)</p>
+            </div>
+            <section className='w-full grid md:grid-cols-2 xl:grid-cols-3 gap-2'>
+                {users.length > 0 && [...users].reverse().map((user) => (
+                    <div key={user._id} className='flex items-center h-24 bg-[var(--secondBg)] p-2 rounded-xl cursor-pointer' 
+                    onClick={() => openUser(user)}>
+                        <div className="h-full aspect-square">
+                            {user.avatar?
+                            <img className='h-full w-full rounded-lg' src={user.avatar} alt="avatar" />
+                            :
+                            <div className="h-full w-full rounded-lg flex items-center justify-center" 
+                            style={{backgroundColor: COLORS[user.username.charCodeAt(0)%10]}}>
+                                <h1 className='capitalize text-white'>{user.username.slice(0,1)}</h1>
+                            </div>}
+                        </div>
+                        
+                        <div className='flex flex-col p-2 overflow-scroll'>
+                            <h2>{user.username}</h2>
+                            <p>{user.mail}</p>
+                        </div>
+                    </div>
+                ))}
+            </section>
+        </main>
+    </>
   )
 }
 

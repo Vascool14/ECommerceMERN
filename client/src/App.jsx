@@ -18,14 +18,17 @@ const AdminPanel = lazy(() => import('./pages/CMS/AdminPanel'))
 const AdminProducts = lazy(() => import('./pages/CMS/AdminProducts'))
 const AdminOrders = lazy(() => import('./pages/CMS/AdminOrders'))
 const AdminUsers = lazy(() => import('./pages/CMS/AdminUsers'))
+const AdminOther = lazy(() => import('./pages/CMS/AdminOther'))
 
-axios.defaults.baseURL = 'http://localhost:80'
+// axios.defaults.baseURL = 'http://192.168.100.130:80'  // ioana acasa
+// axios.defaults.baseURL = 'http://192.168.241.88:80' // liceu
+axios.defaults.baseURL = 'http://192.168.1.10:80' // baia sprie
 axios.defaults.withCredentials = true;
 
-export default function App() {
+export default function App() { 
   const html = document.querySelector('html');
   html.setAttribute('data-theme', localStorage.getItem('data-theme') || 'light');
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--secondBg')); 
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--bg')); 
 
   const { state, setState } = useContext(MyContext);
   const { products, documentTitle } = state;
@@ -37,18 +40,24 @@ export default function App() {
         if(localStorage.getItem('token')){
           axios.get('/users/me', {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
           .then(response =>{
-            setState({
-              ...state,
-              user:response.data,
-              products: {list: res.data.products, loading: false},
-              toast: {text:`Hello, ${response.data.username}!`,success:true}});
+            axios.get('/products/news')
+            .then(r => {
+              setState({...state, })
+              setState({
+                ...state,
+                user:response.data,
+                news: r.data.news[0].news,
+                products: {list: res.data.products, loading: false},
+                toast: {text:`Hello, ${response.data.username}!`,success:true}})
+            })
           }) 
         }
-        else
+        else   
         setState({...state, products: {list:res.data.products, loading:false, err:null}}) 
       })
       .catch(err=> { setState({...state, products: {list: [], error: err, loading: false}}) })
   }, [])
+
   const location = useLocation();
   const background = location.state && location.state.background;
   return (
@@ -102,6 +111,7 @@ export default function App() {
               <Route path="/admin/products" element={<AdminProducts />} />
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/orders" element={<AdminOrders />} />
+              <Route path="admin/other" element={<AdminOther/>} />
             </Routes> 
             {background && (
             <Routes>

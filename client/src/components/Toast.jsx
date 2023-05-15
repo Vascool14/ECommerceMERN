@@ -14,8 +14,8 @@ const Toast = () => {
             setBackup(toast.text);
             setShow(true);
             const timeout = setTimeout(() => {
-                setShow(false);
                 setTimeout(() => clearToast(), 500);
+                setShow(false);
             }, 3000);
             return () => clearTimeout(timeout);
         }
