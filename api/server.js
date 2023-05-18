@@ -15,7 +15,7 @@ app.use(cors({
     origin: ['http://192.168.100.130:5173', 'http://192.168.241.88:5173','http://192.168.1.10:5173'],  // allows requests from the specified origins
     credentials: true  // allows the server to set cookies on the client
 })); 
-app.use((req, res, next) => {
+app.use((req, res, next) => { 
     console.log(`${req.method} ${req.path}`);
     next();
 }); //middleware function to log the request method and path

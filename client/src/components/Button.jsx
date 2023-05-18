@@ -20,7 +20,7 @@ const Button = ({text, disabled}) => {
     transform: translate(-50%, -50%);
     height: 3rem;
     width: 3.4rem;
-    background-color: ${disabled? 'red' : 'var(--blue)'};
+    background-color: ${disabled? 'red' : 'var(--primary)'};
     border-radius: 50%;
     transition: .3s ease;
   }

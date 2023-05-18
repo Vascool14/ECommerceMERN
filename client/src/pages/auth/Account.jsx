@@ -61,9 +61,9 @@ const Account = () => {
                 <div className="w-20 h-20 relative flex items-center justify-center rounded-full overflow-hidden cursor-pointer" 
                 onClick={handleImage}>
                     {user.avatar?
-                    <img className='w-full h-full bg-[var(--blue)]' src={user.avatar} alt='' />
+                    <img className='w-full h-full bg-[var(--primary)]' src={user.avatar} alt='' />
                     :
-                    <div className="w-full h-full flex items-center justify-center gap-2 bg-[var(--blue)]">
+                    <div className="w-full h-full flex items-center justify-center gap-2 bg-[var(--primary)]">
                         <h1 className='capitalize text-white'>{user.username.slice(0,1)}</h1>
                     </div>
                     }

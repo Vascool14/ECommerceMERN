@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema({
         type: Array,
         required: false
     },
+    lastActive: {
+        type: Date,
+        required: false,
+        default: Date.now
+    },
     recentlyViewed: {
         type: Array,
         required: false

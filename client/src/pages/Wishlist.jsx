@@ -21,7 +21,7 @@ const Wishlist = () => {
         {user.wishlist.length > 0 ? 
         <div className='grid gap-2 grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]'>
             {wishlistProducts.map((product) => (
-                <Link to={`/products/${product._id}`} key={product._id} state={{ background:location }}>
+                <Link to={`/products/${product._id}`} key={product._id} state={{ background:location }} className='max-w-[18rem]' >
                     <ProductPreview product={product} />
                 </Link>
             ))}

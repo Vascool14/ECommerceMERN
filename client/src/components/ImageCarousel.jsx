@@ -20,7 +20,7 @@ function ImageCarousel({images}) {
         {images.map((imageUrl, index) => (
           <div  key={index} onClick={() => setActiveIndex(index)}
           className={`h-12 w-12 sm:w-16 sm:h-16 cursor-pointer border-[3px] rounded-md 
-          ${index===activeIndex?'border-[var(--blue)]':'border-[var(--secondBg)]'}`}>
+          ${index===activeIndex?'border-[var(--primary)]':'border-[var(--secondBg)]'}`}>
             <img src={imageUrl} alt="" className="w-full h-full rounded-sm" />
           </div>
         ))}

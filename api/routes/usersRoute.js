@@ -48,9 +48,6 @@ router.post('/login', async (req, res) => {
     const payload = { userId: user._id, role: user.role }; 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' }); // Sign the JWT for 1 days
 
-    // Send the JWT as a cookie for 7 days in milliseconds
-    res.cookie('token', token, { httpOnly: true, maxAge: 86400000, sameSite: 'none', secure: true });
-
     // SUCCESS
     res.status(200).json({token});
     }catch(err){
@@ -79,6 +76,9 @@ router.get('/me', async (req, res) => {
     // Find the user in the database
     const user = await userModel.findById(userId).select('-password'); // Exclude the password from the returned data
     if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    user.lastActive = new Date().getTime(); // Update the user's data
+    await user.save(); // Save the updated user to the database
 
     res.status(200).json(user);
     } catch (err) {

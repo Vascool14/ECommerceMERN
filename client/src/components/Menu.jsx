@@ -11,7 +11,7 @@ const Menu = () => {
     .slider {  width: 27px;  height: 27px; position: absolute;  left: calc(50% - 23px); top: calc(50% - 27px/2);
         border-radius:50%;  background:#fff;  box-shadow:0px 3px 8px #0002, 0px 3px 1px #0001;
         transition: all 0.2s ease-out;  cursor:pointer; }
-    .checkbox:checked + .switch {  background-color:var(--blue); }
+    .checkbox:checked + .switch {  background-color:var(--primary); }
     .checkbox:checked + .switch .slider {   left:calc(50% - 4px);  top:calc(50% - 27px/2); }
     `
     const {state, setState} = useContext(MyContext)

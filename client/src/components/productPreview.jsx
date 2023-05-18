@@ -13,7 +13,7 @@ const ProductPreview = ({product}) => {
       }
   }
   return (
-    <div className='flex flex-col gap-1 text-[var(--text)] cursor-pointer relative h-full overflow-hidden max-h-[min(25rem,80vh)]'>
+    <div className='flex flex-col gap-1 text-[var(--text)] cursor-pointer relative h-full overflow-hidden max-h-[min(30rem,80vh)]'>
         <div className='aspect-[5/6] overflow-hidden relative rounded-xl '>
             <img id='productImg' className='h-full ' src={product.images[0]} width={'100%'} alt="" />
             <div onClick={()=>toggleWishlist(product._id)} className="svgContainer absolute right-0 top-0 m-3 flex items-center justify-center z-[1]">

@@ -21,7 +21,7 @@ const Cart = () => {
         {user.cart.length > 0 ? 
         <div className='grid gap-2 grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]'>
             {cartProducts.map((product) => (
-                <Link to={`/products/${product._id}`} 
+                <Link to={`/products/${product._id}`} className='max-w-[18rem]' 
                 key={product._id} state={{ background:location }}>
                     <ProductPreview product={product} />
                 </Link>
@@ -30,7 +30,7 @@ const Cart = () => {
         :<h2>No items added yet!</h2>
         }
     </main>
-  )
+    )
 }
 
 export default Cart

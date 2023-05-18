@@ -22,7 +22,7 @@ const Toast = () => {
     }, [toast.text]);
     return (
     <div onClick={() => {setShow(false); setTimeout(() => setBackup(""), 500)}} className={`px-3 py-1 rounded-md border-t-[3px] shadow-md shadow-[#4444] transition-all duration-500 flex gap-2 items-center p-2
-        ${toast.success?'border-[var(--blue)]':'border-red-500'} bg-[var(--bg)] text-[var(--text)] fixed max-sm:top-4 right-4 sm:bottom-4 z-[110] 
+        ${toast.success?'border-[var(--primary)]':'border-red-500'} bg-[var(--bg)] text-[var(--text)] fixed max-sm:top-4 right-4 sm:bottom-4 z-[110] 
         ${show ? 'translate-y-[0]':'max-sm:translate-y-[-8rem] sm:translate-y-[8rem]'}`}>
         <h4>{backup}</h4>
     </div>

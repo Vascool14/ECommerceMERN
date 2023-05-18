@@ -100,7 +100,7 @@ const AdminProducts = () => {
                                 className='bg-[var(--secondBg)] rounded-xl p-1 px-3 h-full w-full md:text-lg resize-none overflow-scroll'
                                 />
                             </div>
-                            <div className="hover:bg-[var(--blue)] rounded-xl cursor-pointer bg-[var(--secondBg)] h-full py-2 px-4 flex items-center justify-center" onClick={()=>addImage()}>
+                            <div className="hover:bg-[var(--primary)] rounded-xl cursor-pointer bg-[var(--secondBg)] h-full py-2 px-4 flex items-center justify-center" onClick={()=>addImage()}>
                                 <h4>Add</h4>
                             </div>
                         </div>}
@@ -120,7 +120,7 @@ const AdminProducts = () => {
                         <div className="flex gap-8 max-sm:flex-col w-full">
                             {/* make checkboxes for categories */}
                             <div className="grid grid-cols-5 gap-1 items-start text-sm sm:w-1/2">
-                                <span className='text-[var(--blue)] font-semibold'>Categories: </span>
+                                <span className='text-[var(--primary)] font-semibold'>Categories: </span>
                                 {categiores.map((category, index) => (
                                     <div key={index} className='flex items-center p-1 bg-[var(--secondBg)] h-6 rounded-sm'>
                                         <input type="checkbox" name={category} id={category} />
@@ -131,7 +131,7 @@ const AdminProducts = () => {
                             <hr className='border-[var(--gray)] sm:hidden' />
                             {/* make checkboxes for perks */}
                             <div className="flex flex-wrap gap-1 items-start text-sm sm:w-1/2">
-                                <span className='text-[var(--blue)] font-semibold'>Perks: (only pick 3)</span>
+                                <span className='text-[var(--primary)] font-semibold'>Perks: (only pick 3)</span>
                                 {productPerks.map((perk, index) => (
                                     <div key={index} className='flex items-center p-1 bg-[var(--secondBg)] h-6 rounded-sm'>
                                         <input type="checkbox" name={perk} id={perk} />
@@ -145,7 +145,7 @@ const AdminProducts = () => {
                         <hr className='border-[var(--gray)-gray)]' />
                         <div className="flex gap-2 w-full h-12 justify-between" >
                             <div className="hover:bg-red-600 bg-[var(--secondBg)] text-red-500 hover:text-[var(--text)] px-4 cursor-pointer flex items-center rounded-xl justify-center text-center" onClick={()=> deleteProduct(localProduct._id)}>Delete Product</div>
-                            <div className="hover:bg-[var(--blue)] bg-[var(--secondBg)] px-4 cursor-pointer flex items-center rounded-xl justify-center text-center" onClick={()=> saveChanges()}>Save Changes</div>
+                            <div className="hover:bg-[var(--primary)] bg-[var(--secondBg)] px-4 cursor-pointer flex items-center rounded-xl justify-center text-center" onClick={()=> saveChanges()}>Save Changes</div>
                         </div>
                     </div>
                 </section>}

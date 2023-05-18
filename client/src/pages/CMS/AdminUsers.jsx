@@ -1,29 +1,16 @@
 import React, { useContext,useEffect, useState} from 'react'
 import { MyContext } from '../../Context'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import ProductPreview from '../../components/productPreview'
+import { COLORS } from '../../utils/Constants'
 
 const AdminUsers = () => {
-    const { state, setState } = useContext(MyContext);
+    const { state } = useContext(MyContext);
     const { users, user, products } = state;
     const navigate = useNavigate();
     useEffect(() => {
         if(!localStorage.getItem('token')||user.role !== 'admin') return navigate('/account');
-        axios.get('/admin/users', {headers: {Authorization:`Bearer ${localStorage.getItem('token')}`}})
-        .then(res => {
-            setState({
-            ...state, 
-            users: [...res.data.users],
-            toast:{text:res.data.message, success:true} }) 
-        })
-        .catch(err => {
-            setState({...state, toast:{text:err.response.data.message, success:false}});
-            navigate('/account')
-        })
     }, [])
-    const COLORS = ['red', 'blue', 'green', 'dark-yellow', 'pink', 'purple', 'indigo', 'gray', 'orange', 'teal'];
-
     const [isEditor, setIsEditor] = useState(false);
     const [ localUser , setLocalUser ] = useState({});
     const [ wishlistItems, setWishlistItems ] = useState([]);
@@ -64,7 +51,7 @@ const AdminUsers = () => {
                         <span key={product._id} className='relative min-w-[12rem] max-w-[min(12rem,40vw)]'>
                             <ProductPreview  product={product} />
                             <div className="z-10 opacity-0 hover:opacity-80 text-[var(--bg)] transition-all absolute inset-0 rounded-xl bg-[var(--text)] flex flex-col justify-center text-center gap-3 p-2">
-                                <p className='font-semibold'>Status: <span className='text-[var(--blue)]'>shipping</span></p>
+                                <p className='font-semibold'>Status: <span className='text-[var(--primary)]'>shipping</span></p>
                                 <p className='font-semibold'>Date: 12/12/2021</p>
                                 <p className='font-semibold'>Id: 12094347236724</p>
                                 <p className='font-semibold'>Total: &pound;{product.price}</p>                                

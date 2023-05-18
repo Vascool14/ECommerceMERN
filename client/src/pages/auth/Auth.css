@@ -18,7 +18,7 @@
     width: 20rem;
 }
 input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active  {
-    -webkit-text-fill-color: var(--blue) !important;
+    -webkit-text-fill-color: var(--primary) !important;
     -webkit-box-shadow: 0 0 0px 1000px var(--bg) inset !important;
 }
 
@@ -47,15 +47,15 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 }  
 .auth input:focus, .auth input:valid {
     outline: none;
-    border: solid 1.5px var(--blue);
+    border: solid 1.5px var(--primary);
 }  
 .auth input:focus ~  .user-label, input:valid ~  .user-label {
     transform: translateY(-50%) scale(0.8);
     background-color: var(--bg);
     padding: 0 .2em;
-    color: var(--blue);
+    color: var(--primary);
 }
 .auth a{
-    color: var(--blue);
+    color: var(--primary);
     text-decoration: underline;
 }

@@ -22,8 +22,9 @@
   --bg: #222;
   --text: #fff;
   --secondBg: #2a2a2a;
-  --blue: #08F;
   --gray: #8884;
+  --primary: #08F;
+  /* --primary: #3d7; */
 
   --navHeight: 4rem;
   --sidePadding: 8vw;
@@ -40,7 +41,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 ::selection {
-  background-color: var(--blue);
+  background-color: var(--primary);
   color: var(--bg)
 }
 

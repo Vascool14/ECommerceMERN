@@ -17,12 +17,13 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 const AdminPanel = lazy(() => import('./pages/CMS/AdminPanel'))
 const AdminProducts = lazy(() => import('./pages/CMS/AdminProducts'))
 const AdminOrders = lazy(() => import('./pages/CMS/AdminOrders'))
+const AdminMessages = lazy(()=> import('./pages/CMS/AdminMessages'))
 const AdminUsers = lazy(() => import('./pages/CMS/AdminUsers'))
 const AdminOther = lazy(() => import('./pages/CMS/AdminOther'))
 
 // axios.defaults.baseURL = 'http://192.168.100.130:80'  // ioana acasa
-// axios.defaults.baseURL = 'http://192.168.241.88:80' // liceu
-axios.defaults.baseURL = 'http://192.168.1.10:80' // baia sprie
+axios.defaults.baseURL = 'http://192.168.241.88:80' // liceu
+// axios.defaults.baseURL = 'http://192.168.1.10:80' // baia sprie
 axios.defaults.withCredentials = true;
 
 export default function App() { 
@@ -85,7 +86,7 @@ export default function App() {
             animation: loader 1s infinite cubic-bezier(0.77,0,0.175,1);
           }
           .loader::before { background-color: var(--text) }
-          .loader::after { background-color: var(--blue); animation-delay: 0.5s; }
+          .loader::after { background-color: var(--primary); animation-delay: 0.5s; }
           @keyframes loader {
             0%, 100% {  left: 35px; }
             25% { transform: scale(.3);  }
@@ -111,7 +112,8 @@ export default function App() {
               <Route path="/admin/products" element={<AdminProducts />} />
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/orders" element={<AdminOrders />} />
-              <Route path="admin/other" element={<AdminOther/>} />
+              <Route path="/admin/messages" element={<AdminMessages />} />
+              <Route path="/admin/other" element={<AdminOther />} />
             </Routes> 
             {background && (
             <Routes>

@@ -12,7 +12,10 @@ export const MyProvider = (props) => {
     news: [],
     products: {  list: [],  loading: false },
     user: { username: "", mail: "", avatar: "", cart : [], wishlist: [], recentlyViewed: [], orders: [], role: "" },
-    users: []
+    users: [],
+    orders: [],
+    messages: [],
+    targetedUser: { username: "", mail: "", avatar: "", cart : [], wishlist: [], recentlyViewed: [], orders: []},
   });
   return (
     <MyContext.Provider value={{ state, setState }}>

@@ -22,7 +22,7 @@ header a{
     @apply flex justify-center items-center relative;
 }
 .svgContainer .topPin{
-    @apply absolute -top-1 -right-2 bg-[var(--blue)] text-white rounded-full h-4 text-xs w-4 border border-[var(--text)] p-1 flex items-center justify-center;
+    @apply absolute -top-1 -right-2 bg-[var(--primary)] text-white rounded-full h-4 text-xs w-4 border border-[var(--text)] p-1 flex items-center justify-center;
 }
 
 .svgContainer::before{

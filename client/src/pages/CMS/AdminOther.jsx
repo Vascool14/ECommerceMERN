@@ -62,7 +62,7 @@ const AdminOther = () => {
                 <div className="flex rounded-md overflow-hidden relative w-full h-12">
                     <input type="text" placeholder='Promotional News' value={newPromo} onChange={e=>setNewPromo(e.target.value)} maxLength={46}
                     className='p-2 sm:px-4 w-full h-full overflow-scroll max-sm:text-sm bg-[var(--secondBg)]' />
-                    <div className="h-full w-20 bg-[var(--blue)] flex justify-center items-center cursor-pointer" onClick={()=>Add()}>Add</div>
+                    <div className="h-full w-20 bg-[var(--primary)] flex justify-center items-center cursor-pointer" onClick={()=>Add()}>Add</div>
                 </div>}
                 {// check if there are changes to save
                 (newsList.length !== news.length || newsList.some((item, index) => item !== news[index])) &&

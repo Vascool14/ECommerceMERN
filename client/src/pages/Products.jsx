@@ -24,7 +24,7 @@ const Products = () => {
             ))}
         </section> 
         {/* ERROR */}
-        {products.error&&<h1 className='text-center mt-[25vh]'>Error: <span className='text-[var(--blue)]'>{products.error.message}</span><br/>Please try again later!</h1>}
+        {products.error&&<h1 className='text-center mt-[25vh]'>Error: <span className='text-[var(--primary)]'>{products.error.message}</span><br/>Please try again later!</h1>}
     </main>
   )
 }
