@@ -10,6 +10,7 @@ import Menu from './components/Menu'
 import Login from './pages/auth/Login'
 import Account from './pages/auth/Account'
 const Register = lazy(() => import('./pages/auth/Register'))
+const Messages = lazy(() => import('./pages/auth/Messages'))
 const Wishlist = lazy(() => import('./pages/Wishlist'))
 const Cart = lazy(() => import('./pages/Cart'))
 const Products = lazy(() => import('./pages/Products'))
@@ -21,9 +22,8 @@ const AdminMessages = lazy(()=> import('./pages/CMS/AdminMessages'))
 const AdminUsers = lazy(() => import('./pages/CMS/AdminUsers'))
 const AdminOther = lazy(() => import('./pages/CMS/AdminOther'))
 
-// axios.defaults.baseURL = 'http://192.168.100.130:80'  // ioana acasa
-axios.defaults.baseURL = 'http://192.168.241.88:80' // liceu
-// axios.defaults.baseURL = 'http://192.168.1.10:80' // baia sprie
+axios.defaults.baseURL = 'http://100.115.92.202:8080'  // ioana acasa
+// axios.defaults.baseURL = 'http://192.168.1.10:8080' // baia sprie
 axios.defaults.withCredentials = true;
 
 export default function App() { 
@@ -101,6 +101,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/account" element={<Account />} />
+              <Route path='/account/messages' element={<Messages />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/wishlist" element={<Wishlist />} />

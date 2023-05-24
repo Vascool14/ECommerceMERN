@@ -8,7 +8,7 @@ export const MyProvider = (props) => {
     modalOpen: false,
     toast: { text: "", success: undefined },
     theme: localStorage.getItem('data-theme') || "light",
-    documentTitle: { title: "Amazon Store ", after: "" },
+    documentTitle: { title: "My Store ", after: "" },
     news: [],
     products: {  list: [],  loading: false },
     user: { username: "", mail: "", avatar: "", cart : [], wishlist: [], recentlyViewed: [], orders: [], role: "" },

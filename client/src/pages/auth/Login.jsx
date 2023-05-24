@@ -4,7 +4,6 @@ import './Auth.css'
 import axios from 'axios';
 import Button from '../../components/Button'
 import { MyContext } from '../../Context'
-// import GoogleLogin from 'react-google-login';
 
 const Login = () => {
     const [ mail, setMail ] = useState('');
@@ -25,12 +24,13 @@ const Login = () => {
             })  
         }
         catch(err){
-          setState({...state,toast: {text:err.response.data.error,success:false}});
+          console.log(err)
+          setState({...state,toast: {text:err.message,success:false}});
         }
     }
     const navigate = useNavigate();
     useEffect(() => {
-     if(state.user.mail || redirect) navigate('/account');
+      if(state.user.mail || redirect) navigate('/account');
     }, [state.user, redirect])
     return (
     <main className='auth space'>

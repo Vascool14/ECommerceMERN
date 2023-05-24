@@ -1,19 +1,21 @@
 #messages .message{
-    padding: 6px 10px;
-    max-width: calc(100% - 5rem);
+    padding: 4px 10px;
+    max-width: min(calc(100% - 5rem), 50rem );
     min-width: 2rem;
     width: auto;
     margin: 0 6px;
     position: relative;
-    cursor: pointer;
     z-index: 1;
 }
 #messages .time{
     padding: 4px 8px;
     margin: 0 6px;
+    min-width: 3.4rem;
     border-radius: 0.5rem;
     background-color: var(--text);
-    color: var(--bg)
+    color: var(--bg);
+    font-size: 14px;
+    text-align: center;
 }
 #messages .leftTime{
     left: 0;
@@ -27,13 +29,15 @@
     transform: translateX(0);
     transition: all 0.2s ease-in-out;
 }
-
 #messages .rightMessage{
     background: var(--primary);
     color: white;
     opacity: 1;
     margin-left: auto;
     border-radius: 1rem 1rem 0 1rem;
+}
+#messages .rightMessage::selection{
+    background: var(--bg);
 }
 #messages .leftMessage{
     background: var(--gray);

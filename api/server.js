@@ -11,15 +11,15 @@ const app = express();
 
 //MIDDLEWARE >>>
 app.use(express.json()); //built-in function in Express, parses incoming requests with JSON payloads and is based on body-parser
-app.use(cors({
-    origin: ['http://192.168.100.130:5173', 'http://192.168.241.88:5173','http://192.168.1.10:5173'],  // allows requests from the specified origins
+app.use(cors({ 
+    origin: ['http://100.115.92.202:5173'], 
     credentials: true  // allows the server to set cookies on the client
-})); 
+}));  
 app.use((req, res, next) => { 
-    console.log(`${req.method} ${req.path}`);
+    console.log(`new request: ${req.method} ${req.path}`);
     next();
 }); //middleware function to log the request method and path
-
+ 
 //ROUTES >>>>
 app.use('/products', productsRoute);
 app.use('/users', usersRoute);

@@ -2,8 +2,6 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
-const { google } = require('googleapis');
-const { auth } = require('google-auth-library');
 
 const router = express.Router();
 
@@ -30,7 +28,7 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
- 
+
 // Log in a user
 router.post('/login', async (req, res) => {
   try {
@@ -76,8 +74,8 @@ router.get('/me', async (req, res) => {
     // Find the user in the database
     const user = await userModel.findById(userId).select('-password'); // Exclude the password from the returned data
     if (!user) return res.status(401).json({ error: 'Unauthorized' });
-
-    user.lastActive = new Date().getTime(); // Update the user's data
+  
+    user.lastActive = new Date(); // Update the user's data
     await user.save(); // Save the updated user to the database
 
     res.status(200).json(user);
