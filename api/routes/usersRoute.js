@@ -22,6 +22,11 @@ router.post('/register', async (req, res) => {
     });
     // Save the new user to the database
     await newUser.save();
+
+    const userId = userModel.findOne({ mail })._id;
+    const payload = { userId: userId, role: 'user' }; // Create a JWT payload with the user's ID and role
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' }); // Sign the JWT for 1 days
+    res.status(200).json({token});    
   }catch(err){
     // ERROR Handling
     console.error(err);
@@ -44,7 +49,7 @@ router.post('/login', async (req, res) => {
 
     // Generate a JWT with the user's ID and role
     const payload = { userId: user._id, role: user.role }; 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' }); // Sign the JWT for 1 days
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' }); // Sign the JWT for 1 days
 
     // SUCCESS
     res.status(200).json({token});

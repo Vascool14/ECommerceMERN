@@ -18,7 +18,7 @@ const Login = () => {
           const response = await axios.post('/users/login', { mail, password });
           await axios.get('/users/me', {headers: {Authorization: `Bearer ${response.data.token}`}})
           .then(res =>{
-            setState({...state,user:res.data,toast: {text:`Hello, ${res.data.username}!`,success:true}});
+            setState({...state,user:res.data,toast: {text:`Hello, ${res.data.username.split(' ')[0]}!`, success:true}});
             localStorage.setItem('token', response.data.token);
             setRedirect(true);
             })  

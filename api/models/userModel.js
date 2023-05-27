@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    createdAt: {
+        type: Date,
+        required: false,
+        default: Date.now
+    }
 },{ versionKey: false });  // Disable the version key
 
 module.exports = mongoose.model('userModel', userSchema);

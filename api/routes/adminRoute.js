@@ -46,7 +46,34 @@ router.get('/users', async (req, res) => {
     if (!user || (user.role !== 'admin')) return res.status(401).json({ error: 'Unauthorized' }); // Check if the user is an admin
     else {
       const users = await userModel.find().select('-password'); 
+      users.forEach((user, index) => { 
+        if (user.role === 'admin') users.splice(index, 1);
+      });
       res.status(200).json({users});
+    }
+  }catch(err){
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// get only one User (only for admins)
+router.get('/user', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+
+    // Verify the JWT and extract the user's role
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+
+    // Find the user in the database
+    const user = await userModel.findById(userId);
+    if (!user || (user.role !== 'admin')) return res.status(401).json({ error: 'Unauthorized' }); // Check if the user is an admin
+    else {
+      findUser = await userModel.findById(req.query.id).select('-password');
+      if (!findUser) return res.status(404).json({ error: 'User not found' });
+      res.status(200).json(findUser.lastActive);
     }
   }catch(err){
     console.error(err);

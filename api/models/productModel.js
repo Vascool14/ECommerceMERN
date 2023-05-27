@@ -21,6 +21,10 @@ const productSchema = new mongoose.Schema({
         type: Array,
         required: false
     },
+    stock: {
+        type: Number,
+        required: true
+    },
     reviews: {
         type: Array,
         required: false

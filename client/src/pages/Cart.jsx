@@ -2,6 +2,7 @@ import React, {useContext, useEffect} from 'react'
 import { MyContext } from '../Context'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 import ProductPreview from '../components/productPreview'
+import Button from '../components/Button'
 
 const Cart = () => {
     const { state, setState } = useContext(MyContext);
@@ -17,7 +18,6 @@ const Cart = () => {
     const location = useLocation();
     return (
     <main style={{opacity: user.mail?1:0}}>
-        <h2>Cart</h2>
         {user.cart.length > 0 ? 
         <div className='grid gap-2 grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]'>
             {cartProducts.map((product) => (
@@ -27,7 +27,13 @@ const Cart = () => {
                 </Link>
             ))}
         </div>
-        :<h2>No items added yet!</h2>
+        :
+        <div className="flex-col flex items-center justify-center">
+            <h2 className='text-center mt-[30vh] gap-2'>No items added yet!</h2>
+            <Link to='/products' className='text-center w-[20rem]'>
+                <Button text='Shop Now'/>
+            </Link>
+        </div>
         }
     </main>
     )

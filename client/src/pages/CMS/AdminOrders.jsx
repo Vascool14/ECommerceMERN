@@ -112,12 +112,7 @@ const AdminOrders = () => {
                     <span className="max-sm:hidden">{(new Date(parseInt(order.orderDate)).getFullYear())%100}'</span>
                   </div>
                   <div className="mr-auto p-1 overflow-scroll flex items-center gap-3 sm:gap-4">
-                    <Link className="cursor-pointer ml-2 flex gap-2 itesm-center hover:underline" to="/admin/messages" onClick={() =>setState({...state, targetedUser: state.users.find(user => user.mail === order.mail)})}>
-                      <div className="svgContainer">
-                        <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 9v.906a2.25 2.25 0 01-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 001.183 1.981l6.478 3.488m8.839 2.51l-4.66-2.51m0 0l-1.023-.55a2.25 2.25 0 00-2.134 0l-1.022.55m0 0l-4.661 2.51m16.5 1.615a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V8.844a2.25 2.25 0 011.183-1.98l7.5-4.04a2.25 2.25 0 012.134 0l7.5 4.04a2.25 2.25 0 011.183 1.98V19.5z" /></svg>
-                      </div>
-                      {order.username}
-                    </Link>
+                    {order.username}
                     <span  className='max-md:hidden hover:underline cursor-pointer text-[#888]'
                     onClick={(e) => {e.preventDefault(); window.open(`mailto:${order.mail}?subject=Order%20Update&body=Good%20morning/afternoon/evening,%20your%20order%20has%20been%20....`, '_blank'); }}>({order.mail})</span>
                   </div>

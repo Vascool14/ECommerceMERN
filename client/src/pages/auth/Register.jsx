@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { MyContext } from '../../Context'
@@ -17,20 +17,25 @@ const Register = () => {
     const navigate = useNavigate();
     if(state.user.mail || redirect) navigate('/account');
 
-    async function registerUser(e){
+    function registerUser(e){
       e.preventDefault(); 
-      try{
-          await axios.post('/users/register', {username, mail, password})
-          .then(res => {
-            localStorage.setItem('token', res.data.token);
-            setState({...state, toast: {"text":"User registered successfully!", success: true} });
-            setRedirect(true);
-          })
-      }
-      catch(err){
-        setState({...state, toast: {"text":err.response.data.error, success:false} });
-      }
+      axios.post('/users/register', {username, mail, password})
+      .then((res) => { 
+        localStorage.setItem('token', res.data.token);
+        setState({
+          ...state, 
+          toast: {text:"User registered successfully!", success: true},
+          user: {username: username, mail: mail} 
+        });
+        setRedirect(true);
+      })
+      .catch(err => {
+        setState({...state, toast: {text:err.response.data.error, success:false} });
+      })
     }
+    useEffect(() => {
+      if(redirect) navigate('/account');
+    }, [redirect])
     return (
     <main className="auth">
         <h2>Sign up for the best offers!</h2>

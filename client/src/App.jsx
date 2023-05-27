@@ -57,6 +57,11 @@ export default function App() {
         setState({...state, products: {list:res.data.products, loading:false, err:null}}) 
       })
       .catch(err=> { setState({...state, products: {list: [], error: err, loading: false}}) })
+
+      let interval = setInterval(() => {
+        axios.get('/users/me', {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+      }, 60000)
+      return () => clearInterval(interval);
   }, [])
 
   const location = useLocation();

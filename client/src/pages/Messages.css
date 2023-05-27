@@ -6,6 +6,7 @@
     margin: 0 6px;
     position: relative;
     z-index: 1;
+    word-wrap: break-word;
 }
 #messages .time{
     padding: 4px 8px;

@@ -21,10 +21,10 @@ const AdminUsers = () => {
     }
     return (
     <>
-        {/* EDITOR */}
-        {localUser.username && <div className="fixed w-screen z-10 h-screen flex items-center justify-center transition-all" style={{transform: isEditor ? 'translateX(0)' : 'translateX(-100vw)'}} >
+        {/* MODAL */}
+        {localUser.username && <div className="fixed w-screen z-10 h-screen flex items-center justify-center transition-all" style={{transform: isEditor ? 'translateX(0)' : 'translateX(-150vw)'}} >
             <div className="w-screen h-screen absolute"onClick={()=> {if(isEditor) setIsEditor(false)}}></div>
-            <section className='overflow-y-scroll border border-[#8886] rounded-xl bg-[var(--bg)] w-[96%] sm:w-4/5 max-w-[56rem] max-h-[78vh] z-10 p-2 max-sm:mb-20 sm:mt-16 flex flex-col gap-2'>
+            <section className='overflow-y-scroll border border-[var(--gray)] rounded-xl bg-[var(--bg)] w-[96%] sm:w-4/5 max-w-[56rem] max-h-[78vh] z-10 p-2 max-sm:mb-20 sm:mt-16 flex flex-col gap-2'>
                 <div key={localUser._id} className='flex items-center h-20 rounded-xl'>
                         <div className="h-full aspect-square">
                             {localUser.avatar?
@@ -43,7 +43,7 @@ const AdminUsers = () => {
                         </div>
                 </div>
             {/* orders */}
-                <hr className='border-[var(--gray)] w-full'/>
+                <hr />
                 {wishlistItems.length > 0 ? <>
                 <h3 className='ml-1 capitalize'>{localUser.username}'s orders:</h3>
                 <div className='flex gap-2 w-auto overflow-x-scroll pb-2 min-h-[18rem]'>
@@ -61,7 +61,7 @@ const AdminUsers = () => {
                 </div>
                 </> : <h3 className='ml-1'>User has no orders</h3>}
             {/* wishlist */}
-                <hr className='border-[var(--gray)] w-full'/>
+                <hr />
                 {wishlistItems.length > 0 ? <>
                 <h3 className='ml-1 capitalize'>{localUser.username}'s wishlist:</h3>
                 <div className='flex gap-2 w-auto overflow-x-scroll pb-2 min-h-[18rem]'>
@@ -84,13 +84,13 @@ const AdminUsers = () => {
             </div>
             <section className='w-full grid md:grid-cols-2 xl:grid-cols-3 gap-2'>
                 {users.length > 0 && [...users].reverse().map((user) => (
-                    <div key={user._id} className='flex items-center h-24 bg-[var(--secondBg)] p-2 rounded-xl cursor-pointer' 
+                    <div key={user._id} className='flex items-center h-24 bg-[var(--gray)] p-2 rounded-xl cursor-pointer' 
                     onClick={() => openUser(user)}>
                         <div className="h-full aspect-square">
                             {user.avatar?
-                            <img className='h-full w-full rounded-lg' src={user.avatar} alt="avatar" />
+                            <img className='h-full rounded-lg' src={user.avatar} alt="avatar" />
                             :
-                            <div className="h-full w-full rounded-lg flex items-center justify-center" 
+                            <div className="h-full rounded-lg flex items-center justify-center" 
                             style={{backgroundColor: COLORS[user.username.charCodeAt(0)%10]}}>
                                 <h1 className='capitalize text-white'>{user.username.slice(0,1)}</h1>
                             </div>}

@@ -105,18 +105,18 @@ const AdminProducts = () => {
                             </div>
                         </div>}
                         <div className='flex flex-col gap-2'>
-                        <hr className='border-[var(--gray)]' />
+                        <hr />
                             <div className="flex gap-2 h-12"> 
                                 <input placeholder='Title' name='title' type="text" value={localProduct.title} onChange={(e)=>setLocalProduct({...localProduct,title:e.target.value})} className='bg-[var(--secondBg)] rounded-xl p-1 h-12 px-3 w-full md:text-lg'/>
 
                                 <input name='price' type="number" value={localProduct.price} onChange={(e)=>setLocalProduct({...localProduct,price:e.target.value})} placeholder='&pound; price' className='bg-[var(--secondBg)] rounded-xl p-1 px-3 h-full w-[20%] md:text-lg min-w-[5rem]'
                                 />
                             </div>
-                        <hr className='border-[var(--gray)]' />
+                        <hr />
                         
                         <textarea rows="3" className='bg-[var(--secondBg)] rounded-xl p-1 px-3 h-full w-full md:text-lg resize-none' name='description' type="text" placeholder="Description" value={localProduct.description} onChange={(e)=>setLocalProduct({...localProduct,description:e.target.value})} />
                             
-                        <hr className='border-[var(--gray)]' />
+                        <hr />
                         <div className="flex gap-8 max-sm:flex-col w-full">
                             {/* make checkboxes for categories */}
                             <div className="grid grid-cols-5 gap-1 items-start text-sm sm:w-1/2">
@@ -128,7 +128,7 @@ const AdminProducts = () => {
                                     </div>
                                 ))}    
                             </div>
-                            <hr className='border-[var(--gray)] sm:hidden' />
+                            <hr className='sm:hidden' />
                             {/* make checkboxes for perks */}
                             <div className="flex flex-wrap gap-1 items-start text-sm sm:w-1/2">
                                 <span className='text-[var(--primary)] font-semibold'>Perks: (only pick 3)</span>
@@ -142,7 +142,7 @@ const AdminProducts = () => {
 
                         </div>
                         
-                        <hr className='border-[var(--gray)-gray)]' />
+                        <hr />
                         <div className="flex gap-2 w-full h-12 justify-between" >
                             <div className="hover:bg-red-600 bg-[var(--secondBg)] text-red-500 hover:text-[var(--text)] px-4 cursor-pointer flex items-center rounded-xl justify-center text-center" onClick={()=> deleteProduct(localProduct._id)}>Delete Product</div>
                             <div className="hover:bg-[var(--primary)] bg-[var(--secondBg)] px-4 cursor-pointer flex items-center rounded-xl justify-center text-center" onClick={()=> saveChanges()}>Save Changes</div>
