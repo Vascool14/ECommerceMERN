@@ -12,8 +12,8 @@ export function turnDate(d) {
 
 export function getOnlineStatus(d) {
     d = new Date(d).getTime()
-    return ((new Date().getTime()-d)<60000)?'active now':
-    ((new Date().getTime()-d)<3600000)?`last seen ${Math.round((new Date().getTime()-d)/60000)} minute${Math.round((new Date().getTime()-d)/60000)==1?'':'s'} ago`:
-    ((new Date().getTime()-d)<86400000)?`last seen ${Math.round((new Date().getTime()-d)/3600000)} hour${Math.round((new Date().getTime()-d)/3600000)==1?'':'s'} ago`:
+    return ((new Date().getTime()-d)<80000)?'active now':
+    ((new Date().getTime()-d)<3600000)?`last seen ${Math.floor((new Date().getTime()-d)/60000)} minute${((new Date().getTime()-d)/60000)<=2?'':'s'} ago`:
+    ((new Date().getTime()-d)<86400000)?`last seen ${Math.floor((new Date().getTime()-d)/3600000)} hour${((new Date().getTime()-d)/3600000)<=2?'':'s'} ago`:
     `last seen ${turnDate(d)}`;
 }

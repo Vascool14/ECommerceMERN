@@ -58,10 +58,12 @@ export default function App() {
       })
       .catch(err=> { setState({...state, products: {list: [], error: err, loading: false}}) })
 
-      let interval = setInterval(() => {
-        axios.get('/users/me', {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
-      }, 60000)
-      return () => clearInterval(interval);
+      if(state.user.role !== 'admin') {
+        let interval = setInterval(() => {
+          axios.get('/users/me', {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+        }, 60000)
+        return () => clearInterval(interval);
+      }
   }, [])
 
   const location = useLocation();

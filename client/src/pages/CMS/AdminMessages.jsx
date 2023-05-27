@@ -86,7 +86,7 @@ const AdminMessages = () => {
       {/* users preview */}
       <section className='max-sm:absolute w-full sm:w-2/5 min-w-[18rem] gap-2 flex flex-col h-full overflow-scroll p-2 max-sm:pb-[calc(5.5rem+var(--newsHeight))]'>
           {/* Find by name */}
-          <div className="h-12 relative flex items-center cursor-pointer">
+          <div className="h-12 flex relative items-center cursor-pointer">
             <svg onClick={() => findUser.current.focus()} 
             fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 absolute ml-3 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
             <input 
