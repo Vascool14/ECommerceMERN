@@ -48,7 +48,7 @@ router.get('/users', async (req, res) => {
       const users = await userModel.find().select('-password'); 
       users.forEach((user, index) => { 
         if (user.role === 'admin') users.splice(index, 1);
-      });
+      }); 
       res.status(200).json({users});
     }
   }catch(err){
@@ -79,7 +79,7 @@ router.get('/user', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
   }
-});
+}); 
 
 //POST one product (only for admins)
 router.post('/product', async (req, res) => {

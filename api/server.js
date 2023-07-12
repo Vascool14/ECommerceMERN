@@ -19,7 +19,7 @@ app.use((req, res, next) => {
     console.log(`new request: ${req.method} ${req.path}`);
     next();
 }); //middleware function to log the request method and path
- 
+
 //ROUTES >>>>
 app.use('/products', productsRoute);
 app.use('/users', usersRoute);

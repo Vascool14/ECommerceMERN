@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState, useRef} from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import React, {useContext} from 'react'
+import { useParams, Link } from 'react-router-dom'
 import { MyContext } from '../Context'
 import axios from 'axios'
 import './Pages.css'
@@ -10,8 +10,7 @@ const Product = () => {
     let { id } = useParams()
     id = id.substring(id.indexOf('=')+1);
     const { state, setState } = useContext(MyContext);
-    const { products, documentTitle, user } = state;
-    const [ animate , setAnimate ] = useState(100);
+    const { products } = state;
     if(!products){
       setState({...state, products: {...products, loading: true}});
       axios.get('/products')
@@ -19,41 +18,14 @@ const Product = () => {
         .catch(err=> { setState({...state, products: {list: [], loading: false, toast: {text: err, success: false}}}) })
     }
     const product = products.list.find(product => product._id === id)
-    useEffect(() => {
-      setAnimate(0);
-      const body = document.querySelector('body');
-      body.style.overflow = 'hidden';
-      if(product) setState({...state, modalOpen:true, documentTitle: {...documentTitle, after: ` | ${product.title}`}})
-      document.title = documentTitle.title + documentTitle.after;
-      
-      return () => { 
-        setState({...state, modalOpen:false , documentTitle: {...documentTitle, after: ''}});
-        body.style.overflow = 'auto';
-      }
-    }, [])
-    const navigate = useNavigate();
-    // const recentlyViewedProducts = products.list.filter(product => user.recentlyViewed.includes(product._id));
-    const location = useLocation();
-    const upAnchor = useRef(null);
-    const goTo = (product) => {
-      navigate(`/products/${product.title.replace(/\s+/g,'-').toLowerCase()+'='+product._id}`, {state: {background: location.pathname}});
-      upAnchor.current.scrollIntoView({behavior: 'smooth'}); 
-    }
+    const similarProducts = products.list.filter(product => product.category === product.category && product._id !== id)
     return (
-    <main className='bg-[var(--bg)] fixed top-0 w-screen transition-all duration-500 overflow-scroll h-screen z-10'
-    style={{transform: `translateX(${animate}vw)`}}>
-      <div className="absolute w-1 h-1 top-[-1rem]" ref={upAnchor}></div>
+    <main>
       <div className='relative'>
-        {/* Controls */}
-        {product && 
-        <button onClick={() => navigate(-1)} className='svgContainer z-10 h-7 w-7 absolute top-0 left-[0.1rem] m-2'>
-          <svg className="h-8 w-8 text-[var(--text)] hover:text-[var(--primary)] transition-all duration-300 mr-1" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke={'var(--text)'}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
-        </button>}
-
         {/* Product */}
         {product ?
-          <section className="flex max-md:flex-col items-center justify-center gap-4 max-sm:pt-8">
-             <ImageCarousel images={product.images} />
+          <section className="flex max-md:flex-col items-center gap-4 max-sm:pt-8">
+            <ImageCarousel images={product.images} />
             <div>
               <h3>{product.title} - ${product.price}</h3>
               <p>{product.description}</p>
@@ -87,12 +59,13 @@ const Product = () => {
       {/* SIMILAR */}
         <>
           <h2>View similar</h2>
-          <section className='grid grid-cols-4 gap-2 w-full'>
-          {products.list.slice(0,4).map((product) => (
-              <div onClick={() => goTo(product)}
-              key={product._id} state={{ background:location }}>
+          <section className='grid max-sm:grid-cols-2  
+          grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-2 w-full'>
+          {similarProducts.map((product) => (
+              <Link to={`/products/${product.title.replace(/\s+/g,'-').toLowerCase()+'='+product._id}`} 
+              key={product._id} onClick={() => scrollTo({top:0, behavior:'smooth'})}>
                 <ProductPreview product={product} />
-              </div>
+              </Link>
           ))}
         </section>
         </>

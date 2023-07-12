@@ -22,18 +22,12 @@ const AdminUsers = () => {
     return (
     <>
         {/* MODAL */}
-        {localUser.username && <div className="fixed w-screen z-10 h-screen flex items-center justify-center transition-all" style={{transform: isEditor ? 'translateX(0)' : 'translateX(-150vw)'}} >
+        {localUser.username && <div className="fixed w-screen z-10 h-screen centerAll transition-all" style={{transform: isEditor ? 'translateX(0)' : 'translateX(-150vw)'}} >
             <div className="w-screen h-screen absolute"onClick={()=> {if(isEditor) setIsEditor(false)}}></div>
-            <section className='overflow-y-scroll border border-[var(--gray)] rounded-xl bg-[var(--bg)] w-[96%] sm:w-4/5 max-w-[56rem] max-h-[78vh] z-10 p-2 max-sm:mb-20 sm:mt-16 flex flex-col gap-2'>
-                <div key={localUser._id} className='flex items-center h-20 rounded-xl'>
-                        <div className="h-full aspect-square">
-                            {localUser.avatar?
-                            <img className='h-full w-full rounded-lg' src={localUser.avatar} alt="avatar" />
-                            :
-                            <div className="h-full w-full rounded-lg flex items-center justify-center" 
-                            style={{backgroundColor: COLORS[localUser.username.charCodeAt(0)%10]}}>
-                                <h1 className='capitalize text-white'>{localUser.username.slice(0,1)}</h1>
-                            </div>}
+            <section className='overflow-y-scroll border  rounded-xl bg-[var(--bg)] w-[96%] sm:w-4/5 max-w-[56rem] max-h-[78vh] z-10 p-2 max-sm:mb-20 sm:mt-16 flex flex-col gap-2'>
+                <div key={localUser._id} className='center h-20 rounded-xl'>
+                        <div className="h-full aspect-square rounded-lg centerAll bg-[var(--gray)]">
+                            <h1 className='capitalize text-white'>{localUser.username.slice(0,1)}</h1>
                         </div>
                         
                         <div className='flex flex-col p-2 overflow-scroll'>
@@ -78,22 +72,17 @@ const AdminUsers = () => {
 
         {/* main */}
         <main style={{filter: isEditor ? 'blur(4px)':'none'}}>
-            <div className='mx-auto flex items-end justify-center gap-2'>
+            <div className='mx-auto flex -mt-2 items-end justify-center gap-2'>
                 <h1 className='ml-8'>All Users</h1>
                 <p className='mb-3'>(Newest First)</p>
             </div>
             <section className='w-full grid md:grid-cols-2 xl:grid-cols-3 gap-2'>
                 {users.length > 0 && [...users].reverse().map((user) => (
-                    <div key={user._id} className='flex items-center h-24 bg-[var(--gray)] p-2 rounded-xl cursor-pointer' 
+                    <div key={user._id} className='center h-20 bg-[var(--gray)] p-2 rounded-xl cursor-pointer' 
                     onClick={() => openUser(user)}>
-                        <div className="h-full aspect-square">
-                            {user.avatar?
-                            <img className='h-full rounded-lg' src={user.avatar} alt="avatar" />
-                            :
-                            <div className="h-full rounded-lg flex items-center justify-center" 
-                            style={{backgroundColor: COLORS[user.username.charCodeAt(0)%10]}}>
-                                <h1 className='capitalize text-white'>{user.username.slice(0,1)}</h1>
-                            </div>}
+                        <div className="h-full aspect-square rounded-lg centerAll 
+                        justify-center bg-[var(--gray)]">
+                            <h1 className='capitalize text-white'>{user.username.slice(0,1)}</h1>
                         </div>
                         
                         <div className='flex flex-col p-2 overflow-scroll'>

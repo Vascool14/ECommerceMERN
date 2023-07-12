@@ -78,17 +78,17 @@ const AdminProducts = () => {
     return (
     <>
         {/* EDITOR */}
-        <div className="fixed w-screen z-10 h-screen flex items-center justify-center transition-all duration-300" style={{transform: isEditor ? 'translateX(0)' : 'translateX(-100vw)'}} >
+        <div className="fixed w-screen z-10 h-screen centerAll transition-all duration-300" style={{transform: isEditor ? 'translateX(0)' : 'translateX(-100vw)'}} >
             <div className="w-screen h-screen absolute"onClick={()=> {if(isEditor) {setIsEditor(false); setNewItem(false)}}}></div>
-            <section className='border border-[#8886] rounded-xl bg-[var(--bg)] w-[96%] sm:w-4/5 max-w-[56rem] z-10 p-2 max-sm:mb-20 sm:mt-16'>
+            <section className='border border-[var(--gray)] rounded-xl bg-[var(--bg)] w-[96%] sm:w-4/5 max-w-[56rem] z-10 p-2 max-sm:mb-20 sm:mt-16'>
                 {/* Product */}
                 {localProduct && <section className="flex flex-col gap-2">
                         {/* All images */}
                         {localProduct.images.length > 0 && <div className="flex gap-1">
                             {localProduct.images.map((_, index) => (
-                            <div key={index} className='overflow-hidden border-2 border-[var(--secondBg)] relative rounded-xl flex items-center justify-center aspect-square max-w-[25%] sm:w-auto max-h-[20vh]'>
+                            <div key={index} className='overflow-hidden border-2 border-[var(--secondBg)] relative rounded-xl centerAll aspect-square max-w-[25%] sm:w-auto max-h-[20vh]'>
                                 <img className='rounded-xl  w-full h-full min-w-[6rem] min-h-[6rem]' src={localProduct.images[index]} alt="" />
-                                <div className="hover:bg-[#f00] cursor-pointer bg-[var(--secondBg)] absolute w-full h-1/3 bottom-0 flex items-center justify-center" onClick={()=>deleteImage(index)}>Delete</div>
+                                <div className="hover:bg-[#f00] cursor-pointer bg-[var(--secondBg)] absolute w-full h-1/3 bottom-0 centerAll" onClick={()=>deleteImage(index)}>Delete</div>
                             </div>))}
                         </div>}
                         {/* Add new images */}
@@ -100,7 +100,7 @@ const AdminProducts = () => {
                                 className='bg-[var(--secondBg)] rounded-xl p-1 px-3 h-full w-full md:text-lg resize-none overflow-scroll'
                                 />
                             </div>
-                            <div className="hover:bg-[var(--primary)] rounded-xl cursor-pointer bg-[var(--secondBg)] h-full py-2 px-4 flex items-center justify-center" onClick={()=>addImage()}>
+                            <div className="hover:bg-[var(--primary)] rounded-xl cursor-pointer bg-[var(--secondBg)] h-full py-2 px-4 centerAll" onClick={()=>addImage()}>
                                 <h4>Add</h4>
                             </div>
                         </div>}
@@ -122,7 +122,7 @@ const AdminProducts = () => {
                             <div className="grid grid-cols-5 gap-1 items-start text-sm sm:w-1/2">
                                 <span className='text-[var(--primary)] font-semibold'>Categories: </span>
                                 {categiores.map((category, index) => (
-                                    <div key={index} className='flex items-center p-1 bg-[var(--secondBg)] h-6 rounded-sm'>
+                                    <div key={index} className='center p-1 bg-[var(--secondBg)] h-6 rounded-sm'>
                                         <input type="checkbox" name={category} id={category} />
                                         <label htmlFor={category}>{category}</label>    
                                     </div>
@@ -133,7 +133,7 @@ const AdminProducts = () => {
                             <div className="flex flex-wrap gap-1 items-start text-sm sm:w-1/2">
                                 <span className='text-[var(--primary)] font-semibold'>Perks: (only pick 3)</span>
                                 {productPerks.map((perk, index) => (
-                                    <div key={index} className='flex items-center p-1 bg-[var(--secondBg)] h-6 rounded-sm'>
+                                    <div key={index} className='center p-1 bg-[var(--secondBg)] h-6 rounded-sm'>
                                         <input type="checkbox" name={perk} id={perk} />
                                         <label htmlFor={perk}>{perk}</label>
                                     </div>
@@ -144,8 +144,8 @@ const AdminProducts = () => {
                         
                         <hr />
                         <div className="flex gap-2 w-full h-12 justify-between" >
-                            <div className="hover:bg-red-600 bg-[var(--secondBg)] text-red-500 hover:text-[var(--text)] px-4 cursor-pointer flex items-center rounded-xl justify-center text-center" onClick={()=> deleteProduct(localProduct._id)}>Delete Product</div>
-                            <div className="hover:bg-[var(--primary)] bg-[var(--secondBg)] px-4 cursor-pointer flex items-center rounded-xl justify-center text-center" onClick={()=> saveChanges()}>Save Changes</div>
+                            <div className="hover:bg-red-600 bg-[var(--secondBg)] text-red-500 hover:text-[var(--text)] px-4 cursor-pointer centerAll rounded-xl justify-center text-center" onClick={()=> deleteProduct(localProduct._id)}>Delete Product</div>
+                            <div className="hover:bg-[var(--primary)] bg-[var(--secondBg)] px-4 cursor-pointer centerAll rounded-xl justify-center text-center" onClick={()=> saveChanges()}>Save Changes</div>
                         </div>
                     </div>
                 </section>}
@@ -154,15 +154,16 @@ const AdminProducts = () => {
 
         {/* MAIN */}
         <main style={{filter: isEditor ? 'blur(4px)':'none'}}>
-            <section className='grid max-sm:grid-cols-2 grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-3'>
+            <section className='grid max-sm:grid-cols-2 grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-3'>
                 {/* Products */}
                 {products.list.length > 0 && products.list.map((product, index) => (
                     <div key={index} className='h-full' onClick={()=>openEditor(product._id)}>
                         <ProductPreview product={product} />
                     </div>
                 ))}
-                <div className="h-full min-h-[20rem]">
-                    <div id='productImg' className='h-[77%] mb-auto rounded-xl flex items-center justify-center cursor-pointer' 
+                <div className="h-full min-h-[10rem]">
+                    <div className='w-full aspect-[5/6] mb-auto rounded-xl 
+                    centerAll border cursor-pointer hover:bg-[var(--secondBg)]' 
                     onClick={()=>addProduct()}>
                         <h1>+</h1>
                     </div>

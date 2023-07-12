@@ -1,0 +1,5 @@
+.line{
+    height: 1.5px;
+    min-width: calc(2px + 1.5vw);
+    background-color: var(--text);
+}

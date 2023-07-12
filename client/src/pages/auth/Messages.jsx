@@ -4,6 +4,7 @@ import '../Messages.css'
 import { MONTHS } from '../../utils/Constants'
 import { getMonthAndDate } from '../../utils/Functions'
 import { Link } from 'react-router-dom'
+import { hoursAndMinutes } from '../../utils/Functions'
 
 const Messages = () => {
     const { state, setState } = useContext(MyContext);
@@ -40,30 +41,15 @@ const Messages = () => {
             }, 100);
         }
     }
-    const inputFile = useRef(null);
-    const [file, setFile] = useState(null);
-    useEffect(() => {
-        if(file){
-            // turn file to base64
-            console.log(file);
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                // send base64 to server to upload to cloudinary
-                console.log(reader.result);
-            }
-        }
-    }, [file])
     return (
-    <div className="flex h-screen gap-2 w-screen p-0 max-w-[80rem] mx-auto max-sm:pb-[calc(4.5rem+var(--newsHeight))] sm:pt-[calc(var(--navHeight)+var(--newsHeight))]">
+    <div className="flex sm:px-[var(--sidePadding)] h-screen gap-2 w-screen p-0 
+    max-sm:pb-[calc(var(--navHeight)+var(--newsHeight))] max-w-[70rem] 
+    mx-auto sm:pt-[calc(var(--navHeight)+var(--newsHeight))]">
         <section className='w-full flex flex-col items-center relative bg-[var(--bg)] h-full'>
             {!localStorage.getItem('token') ? 
             <div id='messages' className='flex p-2 relative items-center flex-col h-full w-full gap-[6px] overflow-y-scroll overflow-x-hidden'>
-                <span className='time'>{getMonthAndDate(new Date().getTime())}</span>
                 <div className='message leftMessage'>Hello there!</div>
-                <div className='message leftMessage'>You need to 
-                    &nbsp;<Link to="/login">log in</Link> or
-                    &nbsp;<Link to="/login">register</Link> in order to message us.
+                <div className='message leftMessage'>You need to <Link className='underline' to="/login">log in</Link> or <Link className='underline' to="/register">register</Link> in order to message us.
                 </div>
             </div>
             :
@@ -80,41 +66,44 @@ const Messages = () => {
                     <div key={index} className='w-full flex relative items-center'>
                         <div className={`message ${message.admin?'leftMessage':'rightMessage'}`}>{message.content}</div>
                         <span className={`time absolute ${message.admin?'rightTime':'leftTime'}`}>
-                            {new Date(parseInt(message.date)).getHours()>9?new Date(parseInt(message.date)).getHours():('0'+new Date(parseInt(message.date)).getHours())}:
-                            {new Date(parseInt(message.date)).getMinutes()>9?new Date(parseInt(message.date)).getMinutes():('0'+new Date(parseInt(message.date)).getMinutes())}
+                            {hoursAndMinutes(message.date)}
                         </span>
                     </div>
                     ))}
+                    {!user.messages?.length > 0 && 
+                    !fakeMessages[fakeMessages.length-1].admin &&
+                    (user.messages?.seen ?
+                    <span className='ml-auto mr-2 text-xs'>message seen</span>:
+                    <span className='ml-auto mr-2 text-xs'>
+                    Sent at {hoursAndMinutes(fakeMessages[fakeMessages.length-1].date)}</span>
+                    )}
                 <div ref={bottom}></div>
             </section>}
 
             {/* INPUT */}
-            <form className='h-16 border-t border-[var(--bg)] p-2 
-            bg-[var(--gray)] w-full pr-0 sm:rounded-t-lg flex items-center' 
-            onSubmit={(e)=>{e.preventDefault();sendMessage()}} 
-            autoComplete='off'>
-                <div className="h-full transition-all cursor-pointer bg-[var(--bg)] 
-                hover:scale-90 rounded-lg aspect-square flex items-center justify-center"
-                onClick={()=>inputFile.current.click()}>
-                    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="var(--text)" className="w-7 h-7"><path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" /></svg>
-                    <input type="file" className='hidden' ref={inputFile} onChange={(e)=>{setFile(e.target.files[0])}}/>
-                </div>
+            {localStorage.getItem('token') && 
+            <div className='bg-[var(--bg)] w-full sm:rounded-t-lg min-h-[4rem] border-t 
+            border-[var(--bg)] sticky bottom-0 z-10 overflow-hidden'>
+                <form className='p-2 bg-[var(--gray)] h-full w-full pr-0 centerAll' 
+                onSubmit={(e)=>{e.preventDefault();sendMessage()}} 
+                autoComplete='off'>
 
-                <input onClick={()=>bottom.current.scrollIntoView({behavior:'smooth'})} 
-                type="text" 
-                name="message" 
-                autoCorrect="false"
-                autoComplete="off"
-                value={newMessage}
-                onChange={(e)=>setNewMessage(e.target.value)}
-                className='h-full w-full mx-2 rounded-lg p-4 bg-[var(--bg)]' 
-                placeholder='Type a message' 
-                />
+                    <input onClick={()=>bottom.current.scrollIntoView({behavior:'smooth'})} 
+                    type="text" 
+                    name="message" 
+                    autoCorrect="false"
+                    autoComplete="off"
+                    value={newMessage}
+                    onChange={(e)=>setNewMessage(e.target.value)}
+                    className='h-full w-full mr-2 rounded-lg p-4 bg-[var(--bg)]' 
+                    placeholder='Type a message' 
+                    />
 
-                <div onClick={()=>sendMessage()} className={`${newMessage.length == 0 && 'hidden'} h-full aspect-square flex bg-[var(--text)] hover:scale-90 transition-all mr-2 justify-center items-center rounded-lg cursor-pointer`}>
-                    <svg fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke={'var(--bg)'} className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>
-                </div>
-            </form>
+                    <div onClick={()=>sendMessage()} className={`${newMessage.length == 0 && 'hidden'} h-full aspect-square flex bg-[var(--text)] hover:scale-90 transition-all mr-2 justify-center items-center rounded-lg cursor-pointer`}>
+                        <svg fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke={'var(--bg)'} className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>
+                    </div>
+                </form>
+            </div>}
         </section>
     </div>
     )

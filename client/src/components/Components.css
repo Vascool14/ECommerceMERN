@@ -1,15 +1,13 @@
-.toggleSection{
-    @apply flex w-full p-2 px-3 rounded-3xl items-center justify-between;
-}
-
 header nav{
     height: var(--navHeight);
+    min-height: var(--navHeight);
+    max-height: var(--navHeight);
     transition: all 0.3s ease-out;
     padding: 0.8rem 1.2rem; 
     display: flex; 
     align-items: center; 
     background-color: var(--bg); 
-    @apply max-sm:border-t sm:border-b max-sm:py-5 max-sm:h-auto sm:gap-8 max-sm:justify-around sm:px-[calc(var(--sidePadding)+0.6rem)] border-[var(--gray)]
+    @apply max-sm:border-t sm:border-b max-sm:py-4 max-sm:h-auto sm:gap-8 max-sm:justify-around sm:px-[calc(var(--sidePadding)+0.6rem)] 
 }
 
 header a, header button{
@@ -22,7 +20,7 @@ header a{
     @apply flex justify-center items-center relative;
 }
 .svgContainer .topPin{
-    @apply absolute -top-1 -right-2 bg-[var(--primary)] text-white rounded-full h-4 text-xs w-4 border border-[var(--text)] p-1 flex items-center justify-center;
+    @apply absolute -top-1 -right-2 text-[#fff] rounded-full h-4 text-xs w-4 border bg-[var(--primary)] p-1 flex justify-center items-center;
 }
 
 .svgContainer::before{
@@ -47,8 +45,4 @@ header a{
 
 .placeholder > div{
     @apply rounded-2xl animate-pulse bg-[var(--secondBg)];
-}
-
-#productImg{
-    background: linear-gradient(180deg, var(--secondBg) 0, var(--bg) 75%, #0002 75%, var(--secondBg) 100%);
 }

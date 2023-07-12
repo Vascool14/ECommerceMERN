@@ -22,7 +22,7 @@ export default function AdminPanel(){
         })
     }, [])
     return ( 
-    <main className='max-sm:p-4 flex items-center justify-center'>
+    <main className='max-sm:p-4 centerAll'>
       {state.user.role=='admin' &&
       <section className='flex gap-2 flex-col max-w-[20rem] text-center'>
         <h1>Admin&nbsp;Panel</h1>

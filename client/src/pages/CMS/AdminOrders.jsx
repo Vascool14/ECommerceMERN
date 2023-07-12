@@ -86,7 +86,7 @@ const AdminOrders = () => {
     return (
     <main>
       {isVisible &&  
-          <section className='flex mx-auto max-w-[50rem] flex-col h-auto border border-[var(--gray)] rounded-xl'>
+          <section className='flex mx-auto max-w-[50rem] flex-col h-auto border  rounded-xl'>
             <header className='w-full flex gap-3 justify-between items-center text-[var(--bg)] p-2 bg-[var(--primary)] font-semibold rounded-t-xl'>
               <div className='w-[5.3rem] p-1'>
                   <select name='status' id='status' className='bg-[var(--primary)] cursor-pointer '>
@@ -111,7 +111,7 @@ const AdminOrders = () => {
                     {MONTHS[new Date(parseInt(order.orderDate)).getMonth()]}&nbsp;
                     <span className="max-sm:hidden">{(new Date(parseInt(order.orderDate)).getFullYear())%100}'</span>
                   </div>
-                  <div className="mr-auto p-1 overflow-scroll flex items-center gap-3 sm:gap-4">
+                  <div className="mr-auto p-1 overflow-scroll centerAll gap-3 sm:gap-4">
                     {order.username}
                     <span  className='max-md:hidden hover:underline cursor-pointer text-[#888]'
                     onClick={(e) => {e.preventDefault(); window.open(`mailto:${order.mail}?subject=Order%20Update&body=Good%20morning/afternoon/evening,%20your%20order%20has%20been%20....`, '_blank'); }}>({order.mail})</span>

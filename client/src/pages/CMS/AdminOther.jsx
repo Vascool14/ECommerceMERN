@@ -66,7 +66,7 @@ const AdminOther = () => {
                 </div>}
                 {// check if there are changes to save
                 (newsList.length !== news.length || newsList.some((item, index) => item !== news[index])) &&
-                <div className="h-12 cursor-pointer w-full rounded-md flex items-center justify-center bg-green-500" onClick={()=>Save()}>Save</div>}
+                <div className="h-12 cursor-pointer w-full rounded-md centerAll bg-green-500" onClick={()=>Save()}>Save</div>}
             </div>
         </section>
     </main>

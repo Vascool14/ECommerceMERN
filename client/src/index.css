@@ -27,7 +27,7 @@
   /* --primary: #3d7; */
 
   --navHeight: 4.5rem;
-  --sidePadding: 8vw;
+  --sidePadding: 10vw;
   --newsHeight: 1.5rem;
 }
 [data-theme="light"] {
@@ -39,6 +39,7 @@
 *, *::before, *::after {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  border-color: var(--gray);
 }
 ::selection {
   background-color: var(--primary);
@@ -102,4 +103,9 @@ main{
 
 select option{
   cursor: pointer;
+}
+.centerAll{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

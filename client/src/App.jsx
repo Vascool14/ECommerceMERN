@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { useEffect, useContext, Suspense, lazy } from 'react'
 import axios from 'axios'
 import { MyContext } from './Context'
@@ -21,6 +21,9 @@ const AdminOrders = lazy(() => import('./pages/CMS/AdminOrders'))
 const AdminMessages = lazy(()=> import('./pages/CMS/AdminMessages'))
 const AdminUsers = lazy(() => import('./pages/CMS/AdminUsers'))
 const AdminOther = lazy(() => import('./pages/CMS/AdminOther'))
+const Checkout = lazy(() => import('./pages/checkout/Checkout'))
+const Shipping = lazy(() => import('./pages/checkout/Shipping'))
+const Payment = lazy(() => import('./pages/checkout/Payment'))
 
 axios.defaults.baseURL = 'http://100.115.92.202:8080'  // ioana acasa
 // axios.defaults.baseURL = 'http://192.168.1.10:8080' // baia sprie
@@ -65,16 +68,13 @@ export default function App() {
         return () => clearInterval(interval);
       }
   }, [])
-
-  const location = useLocation();
-  const background = location.state && location.state.background;
   return (
       <div className='App'>
           <Navbar />
           <Menu />
           <Toast />
           <Suspense fallback={
-          <main className="fixed z-50 top-0 h-screen w-screen left-0 flex items-center justify-center"> 
+          <main className="fixed z-50 top-0 h-screen w-screen left-0 centerAll"> 
         <style>
           {`
           .loader {
@@ -104,9 +104,12 @@ export default function App() {
         </style>
         <div className="loader"></div>
           </main>}>
-            <Routes location={background || location}>
+            <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/checkout/shipping" element={<Shipping />} />
+              <Route path="/checkout/payment" element={<Payment />} />
               <Route path="/account" element={<Account />} />
               <Route path='/account/messages' element={<Messages />} />
               <Route path="/login" element={<Login />} />
@@ -115,6 +118,7 @@ export default function App() {
               <Route path="*" element={<NotFound item={'Page'}/>} />
               <Route path="/products" element={<Products/>} />
               <Route path="/products/*" element={<NotFound item={'Product'}/>} />
+              <Route path="/products/:id" element={<Product/>} />
               {/* ADMIN */}
               <Route path="/admin" element={<AdminPanel />}/>
               <Route path="/admin/products" element={<AdminProducts />} />
@@ -122,12 +126,7 @@ export default function App() {
               <Route path="/admin/orders" element={<AdminOrders />} />
               <Route path="/admin/messages" element={<AdminMessages />} />
               <Route path="/admin/other" element={<AdminOther />} />
-            </Routes> 
-            {background && (
-            <Routes>
-              <Route path="/products/:id" element={<Product/>} />
             </Routes>
-            )} 
           </Suspense>
       </div>
   )

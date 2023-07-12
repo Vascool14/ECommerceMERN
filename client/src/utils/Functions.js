@@ -17,3 +17,8 @@ export function getOnlineStatus(d) {
     ((new Date().getTime()-d)<86400000)?`last seen ${Math.floor((new Date().getTime()-d)/3600000)} hour${((new Date().getTime()-d)/3600000)<=2?'':'s'} ago`:
     `last seen ${turnDate(d)}`;
 }
+
+export function hoursAndMinutes(d){
+    d = new Date(d);
+    return `${d.getHours()>9?d.getHours():'0'+d.getHours()}:${d.getMinutes()>9?d.getMinutes():'0'+d.getMinutes()}`;
+}
